@@ -50,3 +50,7 @@ void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_sha
 	}
     glUseProgram(shaderProgram);
 }
+
+void Rectangle::draw(){
+    glDrawArrays(GL_POLYGON, 0, 4);
+}

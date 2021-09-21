@@ -16,6 +16,6 @@ void Scene::update(float time)
 
 	std::unique_ptr<Rectangle> rec = std::make_unique<Rectangle>(1,1,1,1);
 	rec->applyShaders(vertex_shader, fragment_shader);
-
-	glDrawArrays(GL_POLYGON, 0, 4); //mode,first,count
+	rec->draw();
+	 //mode,first,count
 }

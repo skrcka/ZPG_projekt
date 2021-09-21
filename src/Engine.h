@@ -4,7 +4,6 @@
 #include "Utils/utils.h"
 #include <glm/vec4.hpp>
 #include <memory>
-//#include "Scene.h"
 #include "Utils/Singleton.h"
 #include "Input/KeyListener.h"
 #include "Input/MouseListener.h"

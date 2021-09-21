@@ -7,6 +7,7 @@ class Rectangle {
 public:
     Rectangle(int x, int y, int width, int height);
     void applyShaders(const char *vertex_shader, const char *fragment_shader);
+    void draw();
 private:
     int x,y,width,height;
     GLuint VAO, VBO;
