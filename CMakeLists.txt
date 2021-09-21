@@ -9,6 +9,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # Sources
 set(SOURCES
     src/main.cpp
+	src/Utils/utils.cpp
+	src/Engine.cpp
+	src/Window.cpp
+	src/Factory.cpp
 )
 
 # Define the include DIRs
@@ -26,6 +30,7 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(GLFW REQUIRED glfw3)
 find_package(glm REQUIRED)
 find_package(GLUT REQUIRED)
-include_directories( ${OPENGL_INCLUDE_DIRS}  ${GLUT_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS})
+find_package(GLEW REQUIRED)
+include_directories( ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLFW_LIBRARIES} ${GLM_LIBRARIES} )
+target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLFW_LIBRARIES} ${GLM_LIBRARIES} ${GLEW_LIBRARIES} )
