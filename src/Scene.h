@@ -7,6 +7,7 @@
 #include "Input/MouseListener.h"
 #include "Window.h"
 #include "Factory.h"
+#include "Objects/Rectangle.h"
 
 class Engine;
 

@@ -14,6 +14,7 @@ set(SOURCES
 	src/Window.cpp
 	src/Factory.cpp
 	src/Scene.cpp
+	src/Objects/Rectangle.cpp
 )
 
 # Define the include DIRs

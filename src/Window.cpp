@@ -82,3 +82,7 @@ void Window::setViewport() {
 Window::~Window() {
 	glfwDestroyWindow(window);
 }
+
+void Window::clear() const {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}

@@ -34,6 +34,8 @@ void Engine::startRendering() {
 		float delta = (float) (current - last);
 		last = current;
 
+		window->clear();
+
 		scene->update(delta);
 
 		window->swapBuffers();

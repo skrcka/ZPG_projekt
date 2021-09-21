@@ -12,6 +12,7 @@ public:
 	~Window();
 	bool shouldClose() const;
 	void swapBuffers() const;
+	void clear() const;
 
 	int getWidth();
 	int getHeight();
