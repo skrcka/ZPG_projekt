@@ -34,6 +34,24 @@ Window::Window(Engine* engine, int width, int height, const char *title) : engin
 		win->height = h;
 		win->notify();
 	});
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE,
+	GLFW_OPENGL_CORE_PROFILE);  //*/
+
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	float ratio = width / (float)height;
+	glViewport(0, 0, width, height);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+
+	glClearColor(255,255,255,255);
 }
 
 Engine* Window::getEngine(){
@@ -46,7 +64,6 @@ bool Window::shouldClose() const {
 
 void Window::swapBuffers() const {
 	glfwSwapBuffers(window);
-
 }
 
 int Window::getWidth() {

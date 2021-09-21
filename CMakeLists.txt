@@ -13,6 +13,7 @@ set(SOURCES
 	src/Engine.cpp
 	src/Window.cpp
 	src/Factory.cpp
+	src/Scene.cpp
 )
 
 # Define the include DIRs

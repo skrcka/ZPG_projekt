@@ -27,13 +27,14 @@ void Engine::init() {
 }
 
 void Engine::startRendering() {
+	scene = std::make_unique<Scene>(this);
 	double last = glfwGetTime();
 	while (!window->shouldClose()) {
 		double current = glfwGetTime();
 		float delta = (float) (current - last);
 		last = current;
 
-		//TODO
+		scene->update(delta);
 
 		window->swapBuffers();
 		glfwPollEvents();
@@ -52,8 +53,8 @@ void Engine::onMove(double x, double y) {
 	}
 }
 
-Window &Engine::getWindow() {
-	return *window;
+Window* Engine::getWindow() {
+	return window.get();
 }
 
 void Engine::onClick(int button, int action, double x, double y) {
