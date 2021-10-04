@@ -1,13 +1,14 @@
 #include "Rectangle.h"
 
-// -0.5
-Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(width), height(height) {
-	float points[] = {
-		-0.5f, 0.5f, 0.0f,
-		0.5f, 0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f};
-    //vertex buffer object (VBO)
+Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(width), height(height)
+{
+	const float points[4][2][4] = {
+		{{-.5f, -.5f, .5f, 1}, {0.5, 1, 0, 1}},
+		{{-.5f, .5f, .5f, 1}, {1, 0, 0, 1}},
+		{{.5f, -.5f, .5f, 1}, {0, 1, 0, 1}},
+		{{.5f, .5f, .5f, 1}, {0, 0, 0, 1}},
+	};
+	//vertex buffer object (VBO)
 	VBO = 0;
 	glGenBuffers(1, &VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -18,14 +19,17 @@ Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(wi
 	glGenVertexArrays(1, &VAO);	  //generate the VAO
 	glBindVertexArray(VAO);		  //bind the VAO
 	glEnableVertexAttribArray(0); //enable vertex attributes
+	glEnableVertexAttribArray(1); //enable vertex attributes
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL); // Jak nasekat pamet
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)0); // Jak nasekat pamet
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
 
-    glBindVertexArray(VAO);
+	glBindVertexArray(VAO);
 }
 
-void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader){
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader)
+{
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
 	glCompileShader(vertexShader);
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -36,7 +40,7 @@ void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_sha
 	glAttachShader(shaderProgram, vertexShader);
 	glLinkProgram(shaderProgram);
 
-    GLint status;
+	GLint status;
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE)
 	{
@@ -46,11 +50,12 @@ void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_sha
 		glGetProgramInfoLog(shaderProgram, infoLogLength, NULL, strInfoLog);
 		fprintf(stderr, "Linker failure: %s\n", strInfoLog);
 		delete[] strInfoLog;
-        throw(1);
+		throw(1);
 	}
-    glUseProgram(shaderProgram);
+	glUseProgram(shaderProgram);
 }
 
-void Rectangle::draw(){
-    glDrawArrays(GL_POLYGON, 0, 4);
+void Rectangle::draw()
+{
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
