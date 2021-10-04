@@ -1,3 +1,5 @@
+#pragma once
+
 const char *vertex_shader =
 	"#version 330\n"
 	"layout(location=0) in vec4 vp;"

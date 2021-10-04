@@ -3,9 +3,14 @@
 #include "Engine.h"
 #include "Shaders/Fragment_shader.h"
 #include "Shaders/Vertex_shader.h"
+#include "Objects/Rectangle.h"
 
 Scene::Scene(Engine *e) : engine(e)
 {
+	objects.push_back(std::make_unique<Rectangle>(0,0,0,0));
+	for(auto& o : objects){
+		o->applyShaders(vertex_shader, fragment_shader);
+	}
 }
 
 void Scene::update(float time)
@@ -14,8 +19,8 @@ void Scene::update(float time)
 
 	//create and compile shaders
 
-	std::unique_ptr<Rectangle> rec = std::make_unique<Rectangle>(1,1,1,1);
-	rec->applyShaders(vertex_shader, fragment_shader);
-	rec->draw();
+	for(auto& o : objects){
+		o->draw();
+	}
 	 //mode,first,count
 }

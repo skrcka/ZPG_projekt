@@ -1,13 +1,15 @@
 #pragma once
+
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "Input/KeyListener.h"
 #include "Input/MouseListener.h"
 #include "Window.h"
 #include "Factory.h"
-#include "Objects/Rectangle.h"
+#include "Objects/Object.h"
 
 class Engine;
 
@@ -18,4 +20,5 @@ public:
 	void update(float time);
 private:
 	Engine* engine;
+	std::vector<std::unique_ptr<Object>> objects;
 };
