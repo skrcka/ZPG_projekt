@@ -8,10 +8,11 @@
 
 class Rectangle : public Object {
 public:
-    Rectangle(int x, int y, int width, int height);
+    Rectangle(float rotation);
     void applyShaders(const char *vertex_shader, const char *fragment_shader);
     void draw();
+
+    float rotation;
 private:
-    int x,y,width,height;
-    GLuint VAO, VBO;
+    GLuint VAO, VBO, shaderProgram;
 };

@@ -1,6 +1,9 @@
 #include "Rectangle.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
-Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(width), height(height)
+Rectangle::Rectangle(float rotation) : rotation(rotation)
 {
 	const float points[4][2][4] = {
 		{{-.5f, -.5f, .5f, 1}, {0.5, 1, 0, 1}},
@@ -29,8 +32,9 @@ Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(wi
 
 void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader)
 {
-	//glm::mat4 M = glm::mat4(1.0f);
-	//M = glm::rotate(glm::mat4(1.0f),angle,glm::vec3(0.0f, 1.0f, 0.0f));
+	//rotation
+	glm::mat4 M = glm::mat4(1.0f);
+	M = glm::rotate(glm::mat4(1.0f),rotation,glm::vec3(0.0f, 1.0f, 0.0f));
 
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
@@ -55,7 +59,10 @@ void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_sha
 		delete[] strInfoLog;
 		throw(1);
 	}
+	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
+
 	glUseProgram(shaderProgram);
+	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
 }
 
 void Rectangle::draw()
