@@ -26,8 +26,6 @@ Rectangle::Rectangle(float rotation) : rotation(rotation)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)0); // Jak nasekat pamet
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
-
-	glBindVertexArray(VAO);
 }
 
 void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader)
@@ -67,5 +65,7 @@ void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_sha
 
 void Rectangle::draw()
 {
+	glBindVertexArray(VAO);
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
