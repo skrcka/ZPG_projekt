@@ -29,6 +29,9 @@ Rectangle::Rectangle(int x, int y, int width, int height) : x(x), y(y), width(wi
 
 void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader)
 {
+	//glm::mat4 M = glm::mat4(1.0f);
+	//M = glm::rotate(glm::mat4(1.0f),angle,glm::vec3(0.0f, 1.0f, 0.0f));
+
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
 	glCompileShader(vertexShader);
