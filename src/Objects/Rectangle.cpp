@@ -37,6 +37,7 @@ void Rectangle::applyShader(Shader* shader)
 void Rectangle::draw()
 {
 	this->shader->useShader();
+	this->rotation += 0.01;
 	this->shader->applyRotation(rotation);
 	glBindVertexArray(VAO);
 
