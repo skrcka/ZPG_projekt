@@ -21,4 +21,5 @@ public:
 private:
 	Engine* engine;
 	std::vector<std::unique_ptr<Object>> objects;
+	std::unique_ptr<Shader> shader;
 };

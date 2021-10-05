@@ -1,7 +1,8 @@
 #include "Rectangle.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
+
+Rectangle::Rectangle(){
+	Rectangle(0);
+}
 
 Rectangle::Rectangle(float rotation) : rotation(rotation)
 {
@@ -28,43 +29,15 @@ Rectangle::Rectangle(float rotation) : rotation(rotation)
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
 }
 
-void Rectangle::applyShaders(const char *vertex_shader, const char *fragment_shader)
+void Rectangle::applyShader(Shader* shader)
 {
-	//rotation
-	glm::mat4 M = glm::mat4(1.0f);
-	M = glm::rotate(glm::mat4(1.0f),rotation,glm::vec3(0.0f, 1.0f, 0.0f));
-
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
-	glCompileShader(vertexShader);
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragment_shader, NULL);
-	glCompileShader(fragmentShader);
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, fragmentShader);
-	glAttachShader(shaderProgram, vertexShader);
-	glLinkProgram(shaderProgram);
-
-	GLint status;
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status);
-	if (status == GL_FALSE)
-	{
-		GLint infoLogLength;
-		glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &infoLogLength);
-		GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-		glGetProgramInfoLog(shaderProgram, infoLogLength, NULL, strInfoLog);
-		fprintf(stderr, "Linker failure: %s\n", strInfoLog);
-		delete[] strInfoLog;
-		throw(1);
-	}
-	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
-
-	glUseProgram(shaderProgram);
-	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
+	this->shader = shader;
 }
 
 void Rectangle::draw()
 {
+	this->shader->useShader();
+	this->shader->applyRotation(rotation);
 	glBindVertexArray(VAO);
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
