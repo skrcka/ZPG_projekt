@@ -29,9 +29,7 @@ Shader::Shader(const char *vertex_shader, const char *fragment_shader) {
 	}
 }
 
-void Shader::applyRotation(float rotation){
-    glm::mat4 M = glm::mat4(1.0f);
-	M = glm::rotate(glm::mat4(1.0f),rotation,glm::vec3(0.0f, 1.0f, 0.0f));
+void Shader::applyRotation(glm::mat4 M){
 	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
 	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
 }

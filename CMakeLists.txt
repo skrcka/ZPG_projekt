@@ -14,8 +14,11 @@ set(SOURCES
 	src/Window.cpp
 	src/Factory.cpp
 	src/Scene.cpp
-	src/Objects/Rectangle.cpp
+	src/Models/Rectangle.cpp
 	src/Shaders/Shader.cpp
+	src/Camera.cpp
+	src/Objects/Object.cpp
+	src/Transforms/Transform.cpp
 )
 
 # Define the include DIRs

@@ -9,7 +9,7 @@ class Shader {
 public:
     Shader(const char *vertex_shader, const char *fragment_shader);
     void useShader();
-    void applyRotation(float rotation);
+    void applyRotation(glm::mat4 M);
 
     GLuint getShaderProgram();
 private:

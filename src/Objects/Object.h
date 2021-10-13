@@ -1,13 +1,19 @@
 #pragma once
 
 #include "Shaders/Shader.h"
+#include "Models/Model.h"
+#include "Transforms/Transform.h"
 
 class Object {
 public:
-    virtual void applyShader(Shader* shader) = 0;
-    virtual void draw() = 0;
-    virtual ~Object() = default;
+    Object();
+    Object(Model* model, Shader* shader, Transform* transform);
+    void applyShader(Shader* shader);
+    void applyModel(Model* model);
+    void applyTransform(Transform* transform);
+    void draw();
 private:
-    GLuint VAO, VBO;
+    Model* model;
     Shader* shader;
+    Transform* transform;
 };

@@ -1,11 +1,6 @@
 #include "Rectangle.h"
 
 Rectangle::Rectangle(){
-	Rectangle(0);
-}
-
-Rectangle::Rectangle(float rotation) : rotation(rotation)
-{
 	const float points[4][2][4] = {
 		{{-.5f, -.5f, .5f, 1}, {0.5, 1, 0, 1}},
 		{{-.5f, .5f, .5f, 1}, {1, 0, 0, 1}},
@@ -29,17 +24,10 @@ Rectangle::Rectangle(float rotation) : rotation(rotation)
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
 }
 
-void Rectangle::applyShader(Shader* shader)
-{
-	this->shader = shader;
+GLuint Rectangle::getVAO(){
+	return VAO;
 }
 
-void Rectangle::draw()
-{
-	this->shader->useShader();
-	this->rotation += 0.01;
-	this->shader->applyRotation(rotation);
-	glBindVertexArray(VAO);
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+GLuint Rectangle::getVBO(){
+	return VBO;
 }
