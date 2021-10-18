@@ -1,52 +1,46 @@
 #pragma once
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <math.h>
-#include "Window.h"
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 
-class Camera {
+const glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+enum Camera_movement {
+	CAM_FORWARD,
+	CAM_BACKWARD,
+	CAM_LEFT,
+	CAM_RIGHT,
+	CAM_UP,
+	CAM_DOWN
+};
+
+class Camera
+{
 public:
-	Camera(Window &window);
-	~Camera();
-
-	void render();
-	//Object *find(int id) override;
-
-	const glm::mat4 getLookAt();
-	glm::mat4 getPerspective() const;
-
-	void rotateBy(double vert, double hor);
-	void setRotation(float vert, float hor);
-
-	void setZFar(float zFar);
-	void setZNear(float zNear);
-
-	void forward(float diff);
-
-	void backward(float diff);
-
-	void left(float diff);
-
-	void right(float diff);
-
-    void update(Window &camera);
-
-	glm::vec3 getDirection();
-
-protected:
-	void transformed();
-
-private:
-	Window &window;
-
-	glm::vec3 up;
+	// Stores the main vectors of the camera
 	glm::vec3 position;
-	glm::vec3 target;
+	glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 right = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::mat4 viewMat;
+	glm::mat4 projMat;
+	GLfloat movementSpeed;
+	GLfloat sensitivity = 0.05f;
+	GLfloat pitch;
+	GLfloat yaw;
 
-	float v, h;
-    float speed;
-    float positionX, positionY;
-	int width, height;
-	float zFar, zNear;
+	// Camera constructor to set up initial values
+	Camera(int width, int height, glm::vec3 position);
+
+	void updateShader(GLuint shaderProg);
+	void calcOrientation();
+	void calcView();
+	void move(Camera_movement direction);
+	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
+
 };

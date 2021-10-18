@@ -1,84 +1,81 @@
 #include "Camera.h"
 
-Camera::Camera(Window &window) :
-		window(window),
-		up(0.0f, 1.0f, 0.0f),
-		target(0.0f),
-		v(.0f),
-		h(.0f),
-		width(800),
-		height(600),
-		zFar(50.0f),
-		zNear(0.1f),
-        position(.0f),
-        speed(10.0f),
-        positionX(.0f),
-        positionY(.0f) {
-	update(window);
+Camera::Camera(int width, int height, glm::vec3 position) : position(position)
+{
+	yaw = -90.0f;
+	pitch = 0.0f;
+	movementSpeed = 0.1f;
+	viewMat = glm::lookAt(position, position + orientation, worldUp);
+	projMat = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
+	calcOrientation();
 }
 
-Camera::~Camera() {
+void Camera::updateShader(GLuint shaderProg)
+{
+	GLint idViewMat = glGetUniformLocation(shaderProg, "viewMatrix");
+	GLint idProjMat = glGetUniformLocation(shaderProg, "projectionMatrix");
+
+	glUniformMatrix4fv(idViewMat, 1, GL_FALSE, &viewMat[0][0]);
+	glUniformMatrix4fv(idProjMat, 1, GL_FALSE, &projMat[0][0]);
 }
 
-const glm::mat4 Camera::getLookAt() {
-	return glm::lookAt(position, position + target, up);
+void Camera::calcOrientation()
+{
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	orientation = glm::normalize(front);
+	// also re-calculate the Right and Up vector
+	right = glm::normalize(glm::cross(orientation, worldUp)); // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+	up = glm::normalize(glm::cross(right, orientation));
 }
 
-glm::mat4 Camera::getPerspective() const {
-	return glm::perspective(45.0f, 1.0f * width / height, zNear, zFar);
+void Camera::calcView()
+{
+	viewMat = glm::lookAt(position, position + orientation, worldUp);
 }
 
-void Camera::rotateBy(double vert, double hor) {
-	if (vert == 0 && hor == 0) {
-		return;
+void Camera::move(Camera_movement direction)
+{
+	GLfloat velocity = movementSpeed;
+	switch (direction)
+	{
+	case CAM_FORWARD:
+		position += orientation * velocity;
+		break;
+	case CAM_BACKWARD:
+		position -= orientation * velocity;
+		break;
+	case CAM_LEFT:
+		position -= right * velocity;
+		break;
+	case CAM_RIGHT:
+		position += right * velocity;
+		break;
+	case CAM_UP:
+		position += up * velocity;
+		break;
+	case CAM_DOWN:
+		position -= up * velocity;
+		break;
 	}
-
-	v += vert;
-	h += hor;
-
-	setRotation(v + vert, h + hor);
+	calcView();
 }
 
-void Camera::setRotation(float vert, float hor) {
-	v = vert;
-	h = hor;
+void Camera::rotate(double xoffset, double yoffset, GLboolean constrainPitch)
+{
+	yaw += xoffset * sensitivity;
+	pitch -= yoffset * sensitivity;
 
-	target.x = cos(v) * sin(h);
-	target.y = sin(v);
-	target.z = cos(v) * cos(h);
+	// make sure that when pitch is out of bounds, screen doesn't get flipped
+	if (constrainPitch)
+	{
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
+	}
+	calcOrientation();
+	calcView();
 }
-
-void Camera::setZFar(float zFar) {
-	this->zFar = zFar;
-}
-
-void Camera::setZNear(float zNear) {
-	this->zNear = zNear;
-}
-
-void Camera::update(Window &camera) {
-	width = camera.getWidth();
-	height = camera.getHeight();
-}
-
-void Camera::forward(float diff) {
-	//move(glm::normalize(target) * diff * speed);
-}
-
-void Camera::backward(float diff) {
-	//move(-glm::normalize(target) * diff);
-}
-
-void Camera::left(float diff) {
-	//move(-glm::normalize(glm::cross(target, up)) * diff);
-}
-
-void Camera::right(float diff) {
-	//move(glm::normalize(glm::cross(target, up)) * diff);
-}
-
-glm::vec3 Camera::getDirection() {
-	return target;
-}
-
-//void Camera::render(RenderContext &context) {}

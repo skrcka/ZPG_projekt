@@ -49,7 +49,7 @@ Window::Window(Engine* engine, int width, int height, const char *title) : engin
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+	//glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
 
 	glClearColor(255,255,255,255);
 }
@@ -85,4 +85,12 @@ Window::~Window() {
 
 void Window::clear() const {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+GLFWwindow* Window::getWindow(){
+	return window;
+}
+
+void Window::resetCursorPos(){
+	glfwSetCursorPos(window, width / 2, height / 2);
 }

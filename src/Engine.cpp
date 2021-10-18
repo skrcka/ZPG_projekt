@@ -29,6 +29,9 @@ void Engine::init() {
 void Engine::startRendering() {
 	scene = std::make_unique<Scene>(this);
 	double last = glfwGetTime();
+
+	glEnable(GL_DEPTH_TEST);
+
 	while (!window->shouldClose()) {
 		double current = glfwGetTime();
 		float delta = (float) (current - last);
@@ -44,15 +47,47 @@ void Engine::startRendering() {
 }
 
 void Engine::onKey(int key, int scancode, int action, int mods) {
-	for(auto i: keyboard) {
+	/*for(auto i: keyboard) {
 		i->onKey(key, scancode, action, mods);
+	}*/
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_W) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_FORWARD);
+	}
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_A) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_LEFT);
+	}
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_S) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_BACKWARD);
+	}
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_D) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_RIGHT);
+	}
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_UP);
+	}
+	if (glfwGetKey(window->getWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+	{
+		scene->getCamera()->move(CAM_DOWN);
 	}
 }
 
 void Engine::onMove(double x, double y) {
-	for(auto i: mouse) {
+	/*for(auto i: mouse) {
 		i->onMove(x, y);
-	}
+	}*/
+	printf("move %f %f \n", x, y);
+	double xmove, ymove;
+	xmove = x - (window->getWidth() / 2);
+	ymove = y - (window->getHeight() / 2);
+
+	window->resetCursorPos();
+
+	this->scene->getCamera()->rotate(xmove, ymove);
 }
 
 Window* Engine::getWindow() {

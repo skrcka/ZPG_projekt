@@ -13,12 +13,14 @@ public:
 	bool shouldClose() const;
 	void swapBuffers() const;
 	void clear() const;
+	void resetCursorPos();
 
 	int getWidth();
 	int getHeight();
 
 	void setViewport();
 	Engine* getEngine();
+	GLFWwindow* getWindow();
 	
 private:
 	Engine* engine;

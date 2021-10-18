@@ -10,6 +10,7 @@
 #include "Window.h"
 #include "Factory.h"
 #include "Objects/Object.h"
+#include "Camera.h"
 
 class Engine;
 
@@ -18,8 +19,10 @@ public:
 	Scene(Engine* engine);
 
 	void update(float time);
+	Camera* getCamera();
 private:
 	Engine* engine;
+	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<Object>> objects;
 	std::unique_ptr<Shader> shader;
 	std::unique_ptr<Model> model;
