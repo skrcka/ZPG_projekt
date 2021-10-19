@@ -1,17 +1,18 @@
 #include "Model.h"
 
-Model::Model(){
-	const float points[4][2][4] = {
-		{{-.5f, -.5f, .5f, 1}, {0.5, 1, 0, 1}},
-		{{-.5f, .5f, .5f, 1}, {1, 0, 0, 1}},
-		{{.5f, -.5f, .5f, 1}, {0, 1, 0, 1}},
-		{{.5f, .5f, .5f, 1}, {0, 0, 0, 1}},
-	};
+Model::Model(const float points[], int size, GLenum mode) : mode(mode){
+	pointCount = size / 6;
+	int count = 0;
+	for(int i=0;i < size; i++){
+		printf("%f\n", points[i]);
+		count++;
+	}
+	printf("\ncount: %d\n", count);
 	//vertex buffer object (VBO)
 	VBO = 0;
 	glGenBuffers(1, &VBO); // generate the VBO
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), points, GL_STATIC_DRAW);
 
 	//Vertex Array Object (VAO)
 	VAO = 0;
@@ -20,8 +21,13 @@ Model::Model(){
 	glEnableVertexAttribArray(0); //enable vertex attributes
 	glEnableVertexAttribArray(1); //enable vertex attributes
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)0); // Jak nasekat pamet
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (GLvoid*)0); // Jak nasekat pamet
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (GLvoid*)(3*sizeof(GL_FLOAT))); // Jak nasekat pamet
+}
+
+GLenum Model::getMode(){
+	return mode;
 }
 
 GLuint Model::getVAO(){

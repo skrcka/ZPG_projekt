@@ -11,7 +11,7 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 	if (!vertexShaderFile.is_open())
 	{
 		printf("Unable to open file %s", vertex_shader_path);
-		//exit(1);
+		exit(1);
 	}
 	std::stringstream fileData1;
 	fileData1 << vertexShaderFile.rdbuf();
@@ -24,7 +24,7 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 	if (!fragmentShaderFile.is_open())
 	{
 		printf("Unable to open file %s", fragment_shader_path);
-		//exit(1);
+		exit(1);
 	}
 	std::stringstream fileData2;
 	fileData2 << fragmentShaderFile.rdbuf();
@@ -72,7 +72,6 @@ GLuint Shader::getShaderProgram(){
 }
 
 Shader::~Shader(){
-	printf("ShaderLoader::deleteShader()\n");
 	glDetachShader(shaderProgram, vertexShader);
 	glDetachShader(shaderProgram, fragmentShader);
 	glDeleteShader(vertexShader);

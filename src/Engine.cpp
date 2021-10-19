@@ -74,6 +74,22 @@ void Engine::onKey(int key, int scancode, int action, int mods) {
 	{
 		scene->getCamera()->move(CAM_DOWN);
 	}
+	if (glfwGetKey(window->getWindow(),GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		scene->getCamera()->rotate(-300, 0);
+	}
+	if (glfwGetKey(window->getWindow(),GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		scene->getCamera()->rotate(300, 0);
+	}
+	if (glfwGetKey(window->getWindow(),GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		scene->getCamera()->rotate(0, -300);
+	}
+	if (glfwGetKey(window->getWindow(),GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		scene->getCamera()->rotate(0, 300);
+	}
 }
 
 void Engine::onMove(double x, double y) {
@@ -87,7 +103,7 @@ void Engine::onMove(double x, double y) {
 
 	window->resetCursorPos();
 
-	this->scene->getCamera()->rotate(xmove, ymove);
+	//this->scene->getCamera()->rotate(xmove, ymove);
 }
 
 Window* Engine::getWindow() {

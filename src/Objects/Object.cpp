@@ -30,5 +30,5 @@ void Object::draw()
 	this->shader->applyRotation(transform->getMatrix());
 	glBindVertexArray(model->getVAO());
 
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLES, 0, 2880);
 }
