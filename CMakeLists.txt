@@ -14,7 +14,7 @@ set(SOURCES
 	src/Window.cpp
 	src/Factory.cpp
 	src/Scene.cpp
-	src/Models/Rectangle.cpp
+	src/Models/Model.cpp
 	src/Shaders/Shader.cpp
 	src/Camera.cpp
 	src/Objects/Object.cpp

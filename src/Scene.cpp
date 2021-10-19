@@ -3,7 +3,6 @@
 #include "Engine.h"
 #include "Shaders/Fragment_shader.h"
 #include "Shaders/Vertex_shader.h"
-#include "Models/Rectangle.h"
 
 Scene::Scene(Engine *e) : engine(e)
 {
@@ -11,7 +10,7 @@ Scene::Scene(Engine *e) : engine(e)
 	camera = std::make_unique<Camera>(e->getWindow()->getWidth(), e->getWindow()->getHeight(), glm::vec3(0.0f, 0.0f, 5.0f));
 	transform = std::make_unique<Transform>(1.0f);
 	transform2 = std::make_unique<Transform>(-1.0f);
-	model = std::make_unique<Rectangle>();
+	model = std::make_unique<Model>();
 	objects.push_back(std::make_unique<Object>(model.get(), shader.get(), transform.get()));
 	objects.push_back(std::make_unique<Object>(model.get(), shader.get(), transform2.get()));
 }

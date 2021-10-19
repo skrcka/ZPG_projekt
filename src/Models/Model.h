@@ -1,10 +1,15 @@
 #pragma once
 
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <GL/glew.h>
+#include <stdio.h>
+
 class Model {
 public:
-    virtual ~Model() = default;
-    virtual GLuint getVAO() = 0;
-    virtual GLuint getVBO() = 0;
+    Model();
+    GLuint getVAO();
+    GLuint getVBO();
 
 private:
     GLuint VAO, VBO;

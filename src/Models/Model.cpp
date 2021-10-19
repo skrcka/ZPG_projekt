@@ -1,6 +1,6 @@
-#include "Rectangle.h"
+#include "Model.h"
 
-Rectangle::Rectangle(){
+Model::Model(){
 	const float points[4][2][4] = {
 		{{-.5f, -.5f, .5f, 1}, {0.5, 1, 0, 1}},
 		{{-.5f, .5f, .5f, 1}, {1, 0, 0, 1}},
@@ -24,10 +24,10 @@ Rectangle::Rectangle(){
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(points[0]), (GLvoid*)(4*sizeof(GL_FLOAT))); // Jak nasekat pamet
 }
 
-GLuint Rectangle::getVAO(){
+GLuint Model::getVAO(){
 	return VAO;
 }
 
-GLuint Rectangle::getVBO(){
+GLuint Model::getVBO(){
 	return VBO;
 }
