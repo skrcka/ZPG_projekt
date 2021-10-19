@@ -2,13 +2,42 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
-Shader::Shader(const char *vertex_shader, const char *fragment_shader) {
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertex_shader, NULL);
+Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path) {
+	std::ifstream file1(vertex_shader_path);
+	if (!file1.is_open())
+	{
+		printf("Unable to open file %s", vertex_shader_path);
+		//exit(1);
+	}
+	std::stringstream fileData1;
+	fileData1 << file1.rdbuf();
+	file1.close();
+	std::string fileData1String = fileData1.str();
+	int vlen = fileData1String.length();
+	const char *vertex_shader = fileData1String.c_str();
+
+	std::ifstream file2(fragment_shader_path);
+	if (!file2.is_open())
+	{
+		printf("Unable to open file %s", fragment_shader_path);
+		//exit(1);
+	}
+	std::stringstream fileData2;
+	fileData2 << file2.rdbuf();
+	file2.close();
+	std::string fileData2String = fileData2.str();
+	int flen = fileData2String.length();
+	const char *fragment_shader = fileData2String.c_str();
+
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, (const GLchar **) &vertex_shader, &vlen);
 	glCompileShader(vertexShader);
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragment_shader, NULL);
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, (const GLchar **) &fragment_shader, &flen);
 	glCompileShader(fragmentShader);
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, fragmentShader);
@@ -40,4 +69,14 @@ void Shader::useShader(){
 
 GLuint Shader::getShaderProgram(){
     return shaderProgram;
+}
+
+Shader::~Shader(){
+	printf("ShaderLoader::deleteShader()\n");
+	glDetachShader(shaderProgram, vertexShader);
+	glDetachShader(shaderProgram, fragmentShader);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	glUseProgram(0);
+	glDeleteProgram(this->shaderProgram);
 }
