@@ -58,7 +58,7 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 	}
 }
 
-void Shader::applyRotation(glm::mat4 M){
+void Shader::applyTransform(glm::mat4 M){
 	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
 	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
 }

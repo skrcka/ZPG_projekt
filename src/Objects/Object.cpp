@@ -27,7 +27,7 @@ void Object::applyModel(Model* model)
 void Object::draw()
 {
 	this->shader->useShader();
-	this->shader->applyRotation(transform->getMatrix());
+	this->shader->applyTransform(transform->getMatrix());
 	glBindVertexArray(model->getVAO());
 
 	glDrawArrays(GL_TRIANGLES, 0, 2880);
