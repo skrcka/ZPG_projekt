@@ -26,6 +26,7 @@ private:
 	std::vector<std::unique_ptr<Object>> objects;
 	std::unique_ptr<Shader> shader;
 	std::unique_ptr<Model> model;
+	std::unique_ptr<glm::vec3> light;
 	std::unique_ptr<Transform> transform;
 	std::unique_ptr<Transform> transform2;
 };

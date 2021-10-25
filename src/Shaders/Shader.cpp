@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -61,6 +62,15 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 void Shader::applyTransform(glm::mat4 M){
 	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
 	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
+}
+
+void Shader::applyLight(glm::vec3 lightPos){
+	this->lightPos = lightPos;
+	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
+}
+
+glm::vec3 Shader::getLightPos(){
+	return lightPos;
 }
 
 void Shader::useShader(){

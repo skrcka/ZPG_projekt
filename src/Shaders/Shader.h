@@ -11,9 +11,12 @@ public:
     ~Shader();
     void useShader();
     void applyTransform(glm::mat4 M);
+    void applyLight(glm::vec3 lightPos);
+    glm::vec3 getLightPos();
 
     GLuint getShaderProgram();
 private:
+    glm::vec3 lightPos;
     GLuint shaderProgram;
     GLuint vertexShader;
     GLuint fragmentShader;

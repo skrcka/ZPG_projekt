@@ -5,10 +5,12 @@
 
 Scene::Scene(Engine *e) : engine(e)
 {
-	const char* vertex_shader_path = "../src/Shaders/Vertex_shader2.shader";
-	const char* fragment_shader_path = "../src/Shaders/Fragment_shader2.shader";
+	const char* vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.shader";
+	const char* fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.shader";
 	shader = std::make_unique<Shader>(vertex_shader_path, fragment_shader_path);
 	camera = std::make_unique<Camera>(e->getWindow()->getWidth(), e->getWindow()->getHeight(), glm::vec3(0.0f, 0.0f, 5.0f));
+	light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
+	shader->applyLight(*light.get());
 	transform = std::make_unique<Transform>();
 	transform->move(2.0f, 0, 0);
 	transform2 = std::make_unique<Transform>();
