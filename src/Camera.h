@@ -22,7 +22,16 @@ enum Camera_movement {
 class Camera
 {
 public:
-	// Stores the main vectors of the camera
+	Camera(int width, int height, glm::vec3 position);
+
+	glm::mat4 getView();
+	glm::mat4 getProj();
+	void calcOrientation();
+	void calcView();
+	void move(Camera_movement direction);
+	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
+	glm::vec3 getPosition();
+private:
 	glm::vec3 position;
 	glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -33,14 +42,4 @@ public:
 	GLfloat sensitivity = 0.05f;
 	GLfloat pitch;
 	GLfloat yaw;
-
-	// Camera constructor to set up initial values
-	Camera(int width, int height, glm::vec3 position);
-
-	void updateShader(GLuint shaderProg);
-	void calcOrientation();
-	void calcView();
-	void move(Camera_movement direction);
-	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
-
 };

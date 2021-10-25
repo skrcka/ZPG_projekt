@@ -10,15 +10,6 @@ Camera::Camera(int width, int height, glm::vec3 position) : position(position)
 	calcOrientation();
 }
 
-void Camera::updateShader(GLuint shaderProg)
-{
-	GLint idViewMat = glGetUniformLocation(shaderProg, "viewMatrix");
-	GLint idProjMat = glGetUniformLocation(shaderProg, "projectionMatrix");
-
-	glUniformMatrix4fv(idViewMat, 1, GL_FALSE, &viewMat[0][0]);
-	glUniformMatrix4fv(idProjMat, 1, GL_FALSE, &projMat[0][0]);
-}
-
 void Camera::calcOrientation()
 {
 	glm::vec3 front;
@@ -34,6 +25,18 @@ void Camera::calcOrientation()
 void Camera::calcView()
 {
 	viewMat = glm::lookAt(position, position + orientation, worldUp);
+}
+
+glm::mat4 Camera::getView(){
+	return viewMat;
+}
+
+glm::vec3 Camera::getPosition(){
+	return position;
+}
+
+glm::mat4 Camera::getProj(){
+	return projMat;
 }
 
 void Camera::move(Camera_movement direction)

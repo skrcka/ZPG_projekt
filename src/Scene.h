@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <map>
+#include <string>
 #include "Input/KeyListener.h"
 #include "Input/MouseListener.h"
 #include "Window.h"
@@ -24,9 +26,8 @@ private:
 	Engine* engine;
 	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<Object>> objects;
-	std::unique_ptr<Shader> shader;
-	std::unique_ptr<Model> model;
+	std::map<std::string, std::unique_ptr<Shader>> shaders;
+	std::map<std::string, std::unique_ptr<Model>> models;
 	std::unique_ptr<glm::vec3> light;
-	std::unique_ptr<Transform> transform;
-	std::unique_ptr<Transform> transform2;
+	std::map<std::string, std::unique_ptr<Transform>> transforms;
 };
