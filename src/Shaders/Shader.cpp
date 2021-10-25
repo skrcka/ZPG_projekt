@@ -69,14 +69,14 @@ void Shader::applyLight(glm::vec3 lightPos){
 	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 }
 
-void Shader::applyCamera(Camera *cam){
+void Shader::updated(Camera *cam){
 	GLint idViewMat = glGetUniformLocation(shaderProgram, "viewMatrix");
 	GLint idProjMat = glGetUniformLocation(shaderProgram, "projectionMatrix");
 	GLint idCamPosition = glGetUniformLocation(shaderProgram, "cameraPos");
 
 	glUniformMatrix4fv(idViewMat, 1, GL_FALSE, &cam->getView()[0][0]);
 	glUniformMatrix4fv(idProjMat, 1, GL_FALSE, &cam->getProj()[0][0]);
-	glUniformMatrix4fv(idCamPosition, 1, GL_FALSE, glm::value_ptr(cam->getPosition()));
+	glUniform3fv(idCamPosition, 1, glm::value_ptr(cam->getPosition()));
 }
 
 glm::vec3 Shader::getLightPos(){

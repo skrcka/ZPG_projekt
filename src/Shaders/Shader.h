@@ -5,15 +5,16 @@
 #include <GL/glew.h>
 #include <stdio.h>
 #include "Camera.h"
+#include "Utils/Observer.h"
 
-class Shader {
+class Shader : public Observer<Camera> {
 public:
     Shader(const char *vertex_shader_path, const char *fragment_shader_path);
     ~Shader();
     void useShader();
     void applyTransform(glm::mat4 M);
     void applyLight(glm::vec3 lightPos);
-    void applyCamera(Camera *cam);
+    void updated(Camera *cam);
     glm::vec3 getLightPos();
 
     GLuint getShaderProgram();

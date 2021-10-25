@@ -18,6 +18,11 @@ Scene::Scene(Engine *e) : engine(e)
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
 	camera = std::make_unique<Camera>(e->getWindow()->getWidth(), e->getWindow()->getHeight(), glm::vec3(0.0f, 0.0f, 5.0f));
+	
+	camera->addListener(shaders["const"].get());
+	camera->addListener(shaders["lambert"].get());
+	camera->addListener(shaders["phong"].get());
+	
 	light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
 	shaders["phong"]->applyLight(*light.get());
 	transforms.insert({"transform1", std::make_unique<Transform>()});
@@ -50,9 +55,7 @@ void Scene::update(float time)
 	transforms["transform2"]->rotate(transforms["transform2"]->getRotationX() + 0.01, 0, 0);
 	for (auto &o : objects)
 	{
-		shaders["phong"]->applyCamera(camera.get());
-		shaders["lambert"]->applyCamera(camera.get());
-		shaders["const"]->applyCamera(camera.get());
+		camera->notify();
 		o->draw();
 	}
 }
