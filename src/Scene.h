@@ -10,9 +10,7 @@
 #include "Input/KeyListener.h"
 #include "Input/MouseListener.h"
 #include "Window.h"
-#include "Factory.h"
-#include "Objects/Object.h"
-#include "Camera.h"
+#include "AssetManager.h"
 
 class Engine;
 
@@ -24,10 +22,5 @@ public:
 	Camera* getCamera();
 private:
 	Engine* engine;
-	std::unique_ptr<Camera> camera;
-	std::vector<std::unique_ptr<Object>> objects;
-	std::map<std::string, std::unique_ptr<Shader>> shaders;
-	std::map<std::string, std::unique_ptr<Model>> models;
-	std::unique_ptr<glm::vec3> light;
-	std::map<std::string, std::unique_ptr<Transform>> transforms;
+	std::unique_ptr<AssetManager> assets;
 };

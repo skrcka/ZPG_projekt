@@ -19,6 +19,7 @@ set(SOURCES
 	src/Camera.cpp
 	src/Objects/Object.cpp
 	src/Transforms/Transform.cpp
+	src/AssetManager.cpp
 )
 
 # Define the include DIRs
