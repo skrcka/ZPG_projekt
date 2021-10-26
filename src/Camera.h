@@ -11,15 +11,6 @@
 
 const glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-enum Camera_movement {
-	CAM_FORWARD,
-	CAM_BACKWARD,
-	CAM_LEFT,
-	CAM_RIGHT,
-	CAM_UP,
-	CAM_DOWN
-};
-
 class Camera : public Subject<Camera>
 {
 public:
@@ -29,9 +20,11 @@ public:
 	glm::mat4 getProj();
 	void calcOrientation();
 	void calcView();
-	void move(Camera_movement direction);
+	void move();
 	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
 	glm::vec3 getPosition();
+	bool goUp, goDown, goLeft, goRight, goForward, goBack, shouldRotate;
+	double lastX, lastY;
 private:
 	glm::vec3 position;
 	glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);

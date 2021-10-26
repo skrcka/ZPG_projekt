@@ -1,11 +1,12 @@
 #include "Engine.h"
 
-void Engine::init() {
-	glfwSetErrorCallback([] (int err, const char* description) -> void {
-		throw std::runtime_error(description);
-	});
+void Engine::init()
+{
+	glfwSetErrorCallback([](int err, const char *description) -> void
+						 { throw std::runtime_error(description); });
 
-	if (!glfwInit()) {
+	if (!glfwInit())
+	{
 		throw std::runtime_error("failed to init glfw");
 	}
 
@@ -26,15 +27,17 @@ void Engine::init() {
 	*/
 }
 
-void Engine::startRendering() {
+void Engine::startRendering()
+{
 	scene = std::make_unique<Scene>(this);
 	double last = glfwGetTime();
 
 	glEnable(GL_DEPTH_TEST);
 
-	while (!window->shouldClose()) {
+	while (!window->shouldClose())
+	{
 		double current = glfwGetTime();
-		float delta = (float) (current - last);
+		float delta = (float)(current - last);
 		last = current;
 
 		window->clear();
@@ -46,57 +49,102 @@ void Engine::startRendering() {
 	}
 }
 
-void Engine::onKey(int key, int scancode, int action, int mods) {
+void Engine::onKey(int key, int scancode, int action, int mods)
+{
 	if (action == GLFW_PRESS)
 	{
-		if (key == GLFW_KEY_UP) {
-			scene->getCamera()->rotate(0, -300);
-		} else if (key == GLFW_KEY_DOWN) {
-			scene->getCamera()->rotate(0, 300);
-		} else if (key == GLFW_KEY_RIGHT) {
-			scene->getCamera()->rotate(300, 0);
-		} else if (key == GLFW_KEY_LEFT) {
-			scene->getCamera()->rotate(-300, 0);
-		} else if (key == GLFW_KEY_W) {
-			scene->getCamera()->move(CAM_FORWARD);
-		} else if (key == GLFW_KEY_A) {
-			scene->getCamera()->move(CAM_LEFT);
-		} else if (key == GLFW_KEY_S) {
-			scene->getCamera()->move(CAM_BACKWARD);
-		} else if (key == GLFW_KEY_D) {
-			scene->getCamera()->move(CAM_RIGHT);
-		} else if (key == GLFW_KEY_SPACE) {
-			scene->getCamera()->move(CAM_UP);
-		} else if (key == GLFW_KEY_LEFT_CONTROL) {
-			scene->getCamera()->move(CAM_DOWN);
+		if (key == GLFW_KEY_W)
+		{
+			scene->getCamera()->goForward = true;
+		}
+		else if (key == GLFW_KEY_S)
+		{
+			scene->getCamera()->goBack = true;
+		}
+		else if (key == GLFW_KEY_D)
+		{
+			scene->getCamera()->goRight = true;
+		}
+		else if (key == GLFW_KEY_A)
+		{
+			scene->getCamera()->goLeft = true;
+		}
+		else if (key == GLFW_KEY_SPACE)
+		{
+			scene->getCamera()->goUp = true;
+		}
+		else if (key == GLFW_KEY_LEFT_CONTROL)
+		{
+			scene->getCamera()->goDown = true;
+		}
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		if (key == GLFW_KEY_W)
+		{
+			scene->getCamera()->goForward = false;
+		}
+		else if (key == GLFW_KEY_S)
+		{
+			scene->getCamera()->goBack = false;
+		}
+		else if (key == GLFW_KEY_D)
+		{
+			scene->getCamera()->goRight = false;
+		}
+		else if (key == GLFW_KEY_A)
+		{
+			scene->getCamera()->goLeft = false;
+		}
+		else if (key == GLFW_KEY_SPACE)
+		{
+			scene->getCamera()->goUp = false;
+		}
+		else if (key == GLFW_KEY_LEFT_CONTROL)
+		{
+			scene->getCamera()->goDown = false;
 		}
 	}
 }
 
-void Engine::onMove(double x, double y) {
-	/*for(auto i: mouse) {
-		i->onMove(x, y);
-	}*/
-	//printf("move %f %f \n", x, y);
-	double xmove, ymove;
-	xmove = x - (window->getWidth() / 2);
-	ymove = y - (window->getHeight() / 2);
+void Engine::onMove(double x, double y)
+{
+	Camera* cam = this->scene->getCamera();
 
-	window->resetCursorPos();
+	double horChange = cam->lastX - x;
+	double vertChange = cam->lastY - y;
 
-	//this->scene->getCamera()->rotate(xmove, ymove);
+	cam->lastX = x;
+	cam->lastY = y;
+
+	this->scene->getCamera()->rotate(horChange, vertChange);
 }
 
-Window* Engine::getWindow() {
+Window *Engine::getWindow()
+{
 	return window.get();
 }
 
-void Engine::onClick(int button, int action, double x, double y) {
-	if (action != GLFW_PRESS) {
-		return;
+void Engine::onClick(int button, int action, double x, double y)
+{
+	if (action == GLFW_PRESS)
+	{
+		if (button == GLFW_MOUSE_BUTTON_RIGHT)
+		{
+			printf("camera should move\n");
+			scene->getCamera()->shouldRotate = true;
+		}
+	} else if (action == GLFW_RELEASE)
+	{
+		if (button == GLFW_MOUSE_BUTTON_RIGHT)
+		{
+			printf("camera shouldnt move\n");
+			scene->getCamera()->shouldRotate = false;
+		}
 	}
 }
 
-Engine::Engine(){
+Engine::Engine()
+{
 	init();
 }

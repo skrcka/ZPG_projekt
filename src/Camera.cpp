@@ -1,6 +1,7 @@
 #include "Camera.h"
 
-Camera::Camera(int width, int height, glm::vec3 position) : position(position)
+Camera::Camera(int width, int height, glm::vec3 position)
+	: position(position), goUp(false), goDown(false), goForward(false), goBack(false), goLeft(false), goRight(false), shouldRotate(true), lastY(0), lastX(0)
 {
 	yaw = -90.0f;
 	pitch = 0.0f;
@@ -27,58 +28,54 @@ void Camera::calcView()
 	viewMat = glm::lookAt(position, position + orientation, worldUp);
 }
 
-glm::mat4 Camera::getView(){
+glm::mat4 Camera::getView()
+{
 	return viewMat;
 }
 
-glm::vec3 Camera::getPosition(){
+glm::vec3 Camera::getPosition()
+{
 	return position;
 }
 
-glm::mat4 Camera::getProj(){
+glm::mat4 Camera::getProj()
+{
 	return projMat;
 }
 
-void Camera::move(Camera_movement direction)
+void Camera::move()
 {
-	GLfloat velocity = movementSpeed;
-	switch (direction)
-	{
-	case CAM_FORWARD:
-		position += orientation * velocity;
-		break;
-	case CAM_BACKWARD:
-		position -= orientation * velocity;
-		break;
-	case CAM_LEFT:
-		position -= right * velocity;
-		break;
-	case CAM_RIGHT:
-		position += right * velocity;
-		break;
-	case CAM_UP:
-		position += up * velocity;
-		break;
-	case CAM_DOWN:
-		position -= up * velocity;
-		break;
-	}
+	if (goForward)
+		position += orientation * static_cast<GLfloat>(movementSpeed);
+	if (goBack)
+		position -= orientation * static_cast<GLfloat>(movementSpeed);
+	if (goLeft)
+		position -= right * static_cast<GLfloat>(movementSpeed);
+	if (goRight)
+		position += right * static_cast<GLfloat>(movementSpeed);
+	if (goUp)
+		position += up * static_cast<GLfloat>(movementSpeed);
+	if (goDown)
+		position -= up * static_cast<GLfloat>(movementSpeed);
 	calcView();
 }
 
 void Camera::rotate(double xoffset, double yoffset, GLboolean constrainPitch)
 {
-	yaw += xoffset * sensitivity * 0.1f;
-	pitch -= yoffset * sensitivity * 0.1f;
-
-	// make sure that when pitch is out of bounds, screen doesn't get flipped
-	if (constrainPitch)
+	if (shouldRotate)
 	{
-		if (pitch > 89.0f)
-			pitch = 89.0f;
-		if (pitch < -89.0f)
-			pitch = -89.0f;
+		yaw += xoffset * sensitivity;
+		pitch -= yoffset * sensitivity;
+
+		// make sure that when pitch is out of bounds, screen doesn't get flipped
+		if (constrainPitch)
+		{
+			if (pitch > 89.0f)
+				pitch = 89.0f;
+			if (pitch < -89.0f)
+				pitch = -89.0f;
+		}
+		calcOrientation();
+		calcView();
 	}
-	calcOrientation();
-	calcView();
 }

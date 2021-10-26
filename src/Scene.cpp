@@ -50,7 +50,7 @@ Scene::Scene(Engine *e) : engine(e)
 void Scene::update(float time)
 {
 	//printf("%f\n", time);
-
+	camera->move();
 	transforms["transform1"]->rotate(transforms["transform1"]->getRotationX() + 0.01, 0, 0);
 	transforms["transform2"]->rotate(transforms["transform2"]->getRotationX() + 0.01, 0, 0);
 	for (auto &o : objects)
