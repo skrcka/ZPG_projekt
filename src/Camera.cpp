@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera(int width, int height, glm::vec3 position)
-	: position(position), goUp(false), goDown(false), goForward(false), goBack(false), goLeft(false), goRight(false), shouldRotate(true), lastY(0), lastX(0)
+	: position(position), goUp(false), goDown(false), goForward(false), goBack(false), goLeft(false), goRight(false), shouldRotate(false), lastY(0), lastX(0)
 {
 	yaw = -90.0f;
 	pitch = 0.0f;

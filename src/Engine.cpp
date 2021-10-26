@@ -77,6 +77,10 @@ void Engine::onKey(int key, int scancode, int action, int mods)
 		{
 			scene->getCamera()->goDown = true;
 		}
+		else if (key == GLFW_KEY_LEFT_SHIFT)
+		{
+			scene->getCamera()->shouldRotate = true;
+		}
 	}
 	else if (action == GLFW_RELEASE)
 	{
@@ -103,6 +107,10 @@ void Engine::onKey(int key, int scancode, int action, int mods)
 		else if (key == GLFW_KEY_LEFT_CONTROL)
 		{
 			scene->getCamera()->goDown = false;
+		}
+		else if (key == GLFW_KEY_LEFT_SHIFT)
+		{
+			scene->getCamera()->shouldRotate = false;
 		}
 	}
 }
