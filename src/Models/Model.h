@@ -11,9 +11,10 @@ public:
     GLuint getVAO();
     GLuint getVBO();
     GLenum getMode();
+    int getSize();
 
 private:
     GLuint VAO, VBO;
     GLenum mode;
-    int pointCount;
+    int pointCount, size;
 };

@@ -5,6 +5,7 @@
 #include "Models/Plain.h"
 #include "Models/Suzi_flat.h"
 #include "Models/Suzi_smooth.h"
+#include "Models/Tree.h"
 
 Scene::Scene(Engine *e) : engine(e)
 {
@@ -39,12 +40,14 @@ Scene::Scene(Engine *e) : engine(e)
 	models.insert({"plain", std::make_unique<Model>(plain, 6 * 6, GL_TRIANGLES)});
 	models.insert({"suzi", std::make_unique<Model>(suziFlat, 2904 * 6, GL_TRIANGLES)});
 	models.insert({"suzi_smooth", std::make_unique<Model>(suziSmooth, 2904 * 6, GL_TRIANGLES)});
+	models.insert({"tree", std::make_unique<Model>(tree, 92814 * 6, GL_TRIANGLES)});
 	//models.insert({"sphere", Model(sphere, 2880 * (3+3))});
 	objects.push_back(std::make_unique<Object>(models["sphere"].get(), shaders["phong"].get(), transforms["transform1"].get()));
 	objects.push_back(std::make_unique<Object>(models["sphere"].get(), shaders["const"].get(), transforms["transform2"].get()));
 	objects.push_back(std::make_unique<Object>(models["suzi"].get(), shaders["lambert"].get(), transforms["transform3"].get()));
 	objects.push_back(std::make_unique<Object>(models["suzi_smooth"].get(), shaders["phong"].get(), transforms["transform4"].get()));
 	objects.push_back(std::make_unique<Object>(models["plain"].get(), shaders["lambert"].get(), transforms["transform5"].get()));
+	objects.push_back(std::make_unique<Object>(models["tree"].get(), shaders["phong"].get(), transforms["transform5"].get()));
 }
 
 void Scene::update(float time)

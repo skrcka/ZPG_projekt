@@ -30,5 +30,5 @@ void Object::draw()
 	this->shader->applyTransform(transform->getMatrix());
 	glBindVertexArray(model->getVAO());
 
-	glDrawArrays(GL_TRIANGLES, 0, 2880);
+	glDrawArrays(GL_TRIANGLES, 0, model->getSize());
 }
