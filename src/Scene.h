@@ -11,6 +11,7 @@
 #include "Input/MouseListener.h"
 #include "Window.h"
 #include "AssetManager.h"
+#include "Objects/Object.h"
 
 class Engine;
 
@@ -23,4 +24,6 @@ public:
 private:
 	Engine* engine;
 	std::unique_ptr<AssetManager> assets;
+	std::vector<std::unique_ptr<Object>> objects;
+	std::unique_ptr<Camera> camera;
 };

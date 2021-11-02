@@ -19,11 +19,6 @@ AssetManager::AssetManager(Engine *e)
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
 
-	camera = std::make_unique<Camera>(e->getWindow()->getWidth(), e->getWindow()->getHeight(), glm::vec3(0.0f, 0.0f, 5.0f), e->getWindow());
-	camera->addListener(shaders["const"].get());
-	camera->addListener(shaders["lambert"].get());
-	camera->addListener(shaders["phong"].get());
-
 	light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
 	shaders["phong"]->applyLight(*light.get());
 
@@ -43,33 +38,16 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"suzi", std::make_unique<Model>(suziFlat, 2904 * 6, GL_TRIANGLES)});
 	models.insert({"suzi_smooth", std::make_unique<Model>(suziSmooth, 2904 * 6, GL_TRIANGLES)});
 	models.insert({"tree", std::make_unique<Model>(tree, 92814 * 6, GL_TRIANGLES)});
-
-	objects.push_back(std::make_unique<Object>(models["sphere"].get(), shaders["phong"].get(), transforms["transform1"].get()));
-	objects.push_back(std::make_unique<Object>(models["sphere"].get(), shaders["const"].get(), transforms["transform2"].get()));
-	objects.push_back(std::make_unique<Object>(models["suzi"].get(), shaders["lambert"].get(), transforms["transform3"].get()));
-	objects.push_back(std::make_unique<Object>(models["suzi_smooth"].get(), shaders["phong"].get(), transforms["transform4"].get()));
-	objects.push_back(std::make_unique<Object>(models["plain"].get(), shaders["lambert"].get(), transforms["transform5"].get()));
-	objects.push_back(std::make_unique<Object>(models["tree"].get(), shaders["phong"].get(), transforms["transform5"].get()));
-}
-
-Camera *AssetManager::getCamera()
-{
-	return camera.get();
-}
-
-void AssetManager::drawObjects(){
-	for (auto &o : objects)
-	{
-		camera->notify();
-		o->draw();
-	}
-}
-
-void AssetManager::update(float time){
-	camera->move();
-	drawObjects();
 }
 
 Transform* AssetManager::getTransform(std::string name){
 	return transforms[name].get();
+}
+
+Model* AssetManager::getModel(std::string name){
+	return models[name].get();
+}
+
+Shader* AssetManager::getShader(std::string name){
+	return shaders[name].get();
 }

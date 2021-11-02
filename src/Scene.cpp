@@ -10,16 +10,32 @@
 Scene::Scene(Engine *e) : engine(e)
 {
 	assets = std::make_unique<AssetManager>(e);
+	camera = std::make_unique<Camera>(e->getWindow()->getWidth(), e->getWindow()->getHeight(), glm::vec3(0.0f, 0.0f, 5.0f), e->getWindow());
+	camera->addListener(assets->getShader("const"));
+	camera->addListener(assets->getShader("lambert"));
+	camera->addListener(assets->getShader("phong"));
+
+	objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("phong"), assets->getTransform("transform1")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("const"), assets->getTransform("transform2")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("suzi"), assets->getShader("lambert"), assets->getTransform("transform3")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("suzi_smooth"), assets->getShader("phong"), assets->getTransform("transform4")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain"), assets->getShader("lambert"), assets->getTransform("transform5")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), assets->getTransform("transform5")));
 }
 
 void Scene::update(float time)
 {
 	assets->getTransform("transform1")->rotate(assets->getTransform("transform1")->getRotationX() + 0.01, 0, 0);
 	assets->getTransform("transform2")->rotate(assets->getTransform("transform2")->getRotationX() + 0.01, 0, 0);
-	assets->update(time);
+	camera->move();
+	for (auto &o : objects)
+	{
+		camera->notify();
+		o->draw();
+	}
 }
 
 Camera *Scene::getCamera()
 {
-	return assets->getCamera();
+	return camera.get();
 }

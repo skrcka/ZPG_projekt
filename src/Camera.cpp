@@ -17,7 +17,7 @@ Camera::Camera(int width, int height, glm::vec3 position, Window* window)
 void Camera::updated(Window* window){
 	int width = window->getWidth();
 	int height = window->getHeight();
-	projMat = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
+	projMat = glm::perspective(glm::radians(90.0f), (float)width / height, 0.1f, 100.0f);
 	notify();
 }
 
