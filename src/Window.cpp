@@ -28,7 +28,8 @@ Window::Window(Engine* engine, int width, int height, const char *title) : engin
 		win->getEngine()->onClick(button, action, xpos, ypos);
 	});
 	glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int w, int h) -> void {
-		GL_CHECK(glViewport(0, 0, w, h));
+		//GL_CHECK(glViewport(0, 0, w, h));
+		glViewport(0, 0, w, h);
 		Window *win = (Window *) glfwGetWindowUserPointer(window);
 		win->width = w;
 		win->height = h;
