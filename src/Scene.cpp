@@ -25,12 +25,11 @@ Scene::Scene(Engine *e) : engine(e)
 
 void Scene::update(float time)
 {
-	assets->getTransform("transform1")->rotate(assets->getTransform("transform1")->getRotationX() + 0.01, 0, 0);
-	assets->getTransform("transform2")->rotate(assets->getTransform("transform2")->getRotationX() + 0.01, 0, 0);
 	camera->move();
 	for (auto &o : objects)
 	{
 		camera->notify();
+		o->getTransform()->rotate(o->getTransform()->getRotationX() + 0.01, 0, 0);
 		o->draw();
 	}
 }

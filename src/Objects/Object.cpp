@@ -4,22 +4,21 @@ Object::Object()
 {
 }
 
-Object::Object(Model* model, Shader* shader, Transform* transform) : model(model), shader(shader), transform(transform)
+Object::Object(Model *model, Shader *shader, Transform *transform) : model(model), shader(shader), transform(transform)
 {
-	
 }
 
-void Object::applyShader(Shader* shader)
+void Object::applyShader(Shader *shader)
 {
 	this->shader = shader;
 }
 
-void Object::applyTransform(Transform* transform)
+void Object::applyTransform(Transform *transform)
 {
 	this->transform = transform;
 }
 
-void Object::applyModel(Model* model)
+void Object::applyModel(Model *model)
 {
 	this->model = model;
 }
@@ -31,4 +30,19 @@ void Object::draw()
 	glBindVertexArray(model->getVAO());
 
 	glDrawArrays(GL_TRIANGLES, 0, model->getSize());
+}
+
+Transform *Object::getTransform()
+{
+	return transform;
+}
+
+Shader *Object::getShader()
+{
+	return shader;
+}
+
+Model *Object::getModel()
+{
+	return model;
 }

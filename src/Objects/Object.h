@@ -11,6 +11,9 @@ public:
     void applyShader(Shader* shader);
     void applyModel(Model* model);
     void applyTransform(Transform* transform);
+    Transform* getTransform();
+    Shader* getShader();
+    Model* getModel();
     void draw();
 private:
     Model* model;
