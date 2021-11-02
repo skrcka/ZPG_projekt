@@ -9,23 +9,28 @@
 #include <glm/gtx/vector_angle.hpp>
 #include "Utils/Observer.h"
 
+class Window;
+
 const glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-class Camera : public Subject<Camera>
+class Camera : public Subject<Camera>, public Observer<Window>
 {
 public:
-	Camera(int width, int height, glm::vec3 position);
+	Camera(int width, int height, glm::vec3 position, Window* window);
 
 	glm::mat4 getView();
 	glm::mat4 getProj();
 	void calcOrientation();
+	void onResize(int w, int h);
 	void calcView();
 	void move();
 	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
+	void updated(Window* window);
 	glm::vec3 getPosition();
 	bool goUp, goDown, goLeft, goRight, goForward, goBack, shouldRotate;
 	double lastX, lastY;
 private:
+	Window* window;
 	glm::vec3 position;
 	glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);

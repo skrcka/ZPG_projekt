@@ -133,6 +133,10 @@ Window *Engine::getWindow()
 	return window.get();
 }
 
+void Engine::onResize(int w, int h){
+	this->scene->getCamera()->onResize(w, h);
+}
+
 void Engine::onClick(int button, int action, double x, double y)
 {
 	if (action == GLFW_PRESS)

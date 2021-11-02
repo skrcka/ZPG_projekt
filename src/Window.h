@@ -13,7 +13,6 @@ public:
 	bool shouldClose() const;
 	void swapBuffers() const;
 	void clear() const;
-	void resetCursorPos();
 
 	int getWidth();
 	int getHeight();

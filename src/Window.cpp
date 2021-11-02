@@ -32,7 +32,7 @@ Window::Window(Engine* engine, int width, int height, const char *title) : engin
 		Window *win = (Window *) glfwGetWindowUserPointer(window);
 		win->width = w;
 		win->height = h;
-		win->notify();
+		win->getEngine()->onResize(w, h);
 	});
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -89,8 +89,4 @@ void Window::clear() const {
 
 GLFWwindow* Window::getWindow(){
 	return window;
-}
-
-void Window::resetCursorPos(){
-	glfwSetCursorPos(window, width / 2, height / 2);
 }

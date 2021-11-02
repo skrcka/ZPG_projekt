@@ -1,7 +1,8 @@
 #include "Camera.h"
+#include "Window.h"
 
-Camera::Camera(int width, int height, glm::vec3 position)
-	: position(position), goUp(false), goDown(false), goForward(false), goBack(false), goLeft(false), goRight(false), shouldRotate(false), lastY(0), lastX(0)
+Camera::Camera(int width, int height, glm::vec3 position, Window* window)
+	: position(position), goUp(false), goDown(false), goForward(false), goBack(false), goLeft(false), goRight(false), shouldRotate(false), lastY(0), lastX(0), window(window)
 {
 	yaw = -90.0f;
 	pitch = 0.0f;
@@ -9,6 +10,19 @@ Camera::Camera(int width, int height, glm::vec3 position)
 	viewMat = glm::lookAt(position, position + orientation, worldUp);
 	projMat = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
 	calcOrientation();
+	window->addListener(this);
+	updated(window);
+}
+
+void Camera::updated(Window* window){
+	int width = window->getWidth();
+	int height = window->getHeight();
+	projMat = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
+	notify();
+}
+
+void Camera::onResize(int w, int h){
+	projMat = glm::perspective(glm::radians(45.0f), (float)w / h, 0.1f, 100.0f);
 }
 
 void Camera::calcOrientation()
