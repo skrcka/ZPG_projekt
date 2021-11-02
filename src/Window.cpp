@@ -32,7 +32,7 @@ Window::Window(Engine* engine, int width, int height, const char *title) : engin
 		Window *win = (Window *) glfwGetWindowUserPointer(window);
 		win->width = w;
 		win->height = h;
-		win->getEngine()->onResize(w, h);
+		win->notify();
 	});
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
