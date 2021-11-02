@@ -2,12 +2,6 @@
 
 Model::Model(const float points[], int size, GLenum mode) : mode(mode), size(size){
 	pointCount = size / 6;
-	int count = 0;
-	for(int i=0;i < size; i++){
-		printf("%f\n", points[i]);
-		count++;
-	}
-	printf("\ncount: %d\n", count);
 	//vertex buffer object (VBO)
 	VBO = 0;
 	glGenBuffers(1, &VBO); // generate the VBO
