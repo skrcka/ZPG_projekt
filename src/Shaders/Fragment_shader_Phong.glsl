@@ -16,7 +16,7 @@ vec3 diffuse = dot_product * vec3( 1.0f, 1.0f, 1.0f);
 vec3 fromLightVector = normalize(ex_worldPosition.xyz - lightPos);
 vec3 reflectFromLightVector = normalize(reflect(fromLightVector, normalize(ex_worldNormal)));
 vec3 toCamVector = normalize(cameraPos - ex_worldPosition.xyz);
-float specularConstant = pow(max(dot(toCamVector, reflectFromLightVector),0), 30);
+float specularConstant = pow(max(dot(toCamVector, reflectFromLightVector),0), 60);
 vec3 specular = vec3(1.f, 1.f, 1.f) * specularConstant;
 //Output
 out_Color = vec4(baseColor, 1.f) * (vec4(ambientLight, 1.f)
