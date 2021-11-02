@@ -9,12 +9,12 @@
 
 AssetManager::AssetManager(Engine *e)
 {
-	const char *const_vertex_shader_path = "../src/Shaders/Vertex_shader_Const.shader";
-	const char *const_fragment_shader_path = "../src/Shaders/Fragment_shader_Const.shader";
-	const char *lambert_vertex_shader_path = "../src/Shaders/Vertex_shader_Lambert.shader";
-	const char *lambert_fragment_shader_path = "../src/Shaders/Fragment_shader_Lambert.shader";
-	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.shader";
-	const char *phong_fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.shader";
+	const char *const_vertex_shader_path = "../src/Shaders/Vertex_shader_Const.glsl";
+	const char *const_fragment_shader_path = "../src/Shaders/Fragment_shader_Const.glsl";
+	const char *lambert_vertex_shader_path = "../src/Shaders/Vertex_shader_Lambert.glsl";
+	const char *lambert_fragment_shader_path = "../src/Shaders/Fragment_shader_Lambert.glsl";
+	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.glsl";
+	const char *phong_fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.glsl";
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
