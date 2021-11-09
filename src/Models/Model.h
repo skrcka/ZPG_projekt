@@ -7,7 +7,7 @@
 
 class Model {
 public:
-    Model(const float points[], int size, GLenum mode = GL_TRIANGLES);
+    Model(const float points[], int sizeRow, int rowCount, GLenum mode = GL_TRIANGLES);
     GLuint getVAO();
     GLuint getVBO();
     GLenum getMode();
@@ -16,5 +16,5 @@ public:
 private:
     GLuint VAO, VBO;
     GLenum mode;
-    int pointCount, size;
+    int pointCount, sizeRow, rowCount;
 };

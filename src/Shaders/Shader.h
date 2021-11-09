@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "Camera.h"
 #include "Utils/Observer.h"
+#include "Textures/Texture.h"
 
 class Shader : public Observer<Camera> {
 public:
@@ -15,6 +16,7 @@ public:
     void applyTransform(glm::mat4 M);
     void applyLight(glm::vec3 lightPos);
     void updated(Camera *cam);
+    void applyTexture(int index);
     glm::vec3 getLightPos();
 
     GLuint getShaderProgram();

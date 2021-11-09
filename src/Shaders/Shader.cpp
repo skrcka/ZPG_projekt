@@ -79,6 +79,11 @@ void Shader::updated(Camera *cam){
 	glUniform3fv(idCamPosition, 1, glm::value_ptr(cam->getPosition()));
 }
 
+void Shader::applyTexture(int index){
+	glUniform1i(glGetUniformLocation(shaderProgram, "textureUnitID"), index);
+	printf("using shader: %d\n", index);
+}
+
 glm::vec3 Shader::getLightPos(){
 	return lightPos;
 }

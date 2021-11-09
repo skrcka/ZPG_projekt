@@ -5,12 +5,14 @@
 #include "Models/Suzi_flat.h"
 #include "Models/Suzi_smooth.h"
 #include "Models/Tree.h"
+#include "Models/Plain_uv.h"
 #include "Engine.h"
 
 AssetManager::AssetManager(Engine *e)
 {
 	const char *const_vertex_shader_path = "../src/Shaders/Vertex_shader_Const.glsl";
 	const char *const_fragment_shader_path = "../src/Shaders/Fragment_shader_Const.glsl";
+	const char *texture_fragment_shader_path = "../src/Shaders/Fragment_shader_Texture.glsl";
 	const char *lambert_vertex_shader_path = "../src/Shaders/Vertex_shader_Lambert.glsl";
 	const char *lambert_fragment_shader_path = "../src/Shaders/Fragment_shader_Lambert.glsl";
 	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.glsl";
@@ -18,6 +20,7 @@ AssetManager::AssetManager(Engine *e)
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
+	shaders.insert({"const_texture", std::make_unique<Shader>(const_vertex_shader_path, texture_fragment_shader_path)});
 
 	light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
 	shaders["phong"]->applyLight(*light.get());
@@ -33,11 +36,14 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform4"]->move(0, 0, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
 
-	models.insert({"sphere", std::make_unique<Model>(sphere, 2880 * (3 + 3), GL_TRIANGLES)});
-	models.insert({"plain", std::make_unique<Model>(plain, 6 * 6, GL_TRIANGLES)});
-	models.insert({"suzi", std::make_unique<Model>(suziFlat, 2904 * 6, GL_TRIANGLES)});
-	models.insert({"suzi_smooth", std::make_unique<Model>(suziSmooth, 2904 * 6, GL_TRIANGLES)});
-	models.insert({"tree", std::make_unique<Model>(tree, 92814 * 6, GL_TRIANGLES)});
+	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
+	models.insert({"plain", std::make_unique<Model>(plain, 6, 6, GL_TRIANGLES)});
+	models.insert({"suzi", std::make_unique<Model>(suziFlat, 6, 2904, GL_TRIANGLES)});
+	models.insert({"suzi_smooth", std::make_unique<Model>(suziSmooth, 6, 2904, GL_TRIANGLES)});
+	models.insert({"tree", std::make_unique<Model>(tree, 6, 92814, GL_TRIANGLES)});
+	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
+
+	textures.insert({"xd", std::make_unique<Texture>("../src/Textures/test.png", textures.size())});
 }
 
 Transform* AssetManager::getTransform(std::string name){
@@ -50,4 +56,8 @@ Model* AssetManager::getModel(std::string name){
 
 Shader* AssetManager::getShader(std::string name){
 	return shaders[name].get();
+}
+
+Texture* AssetManager::getTexture(std::string name){
+	return textures[name].get();
 }

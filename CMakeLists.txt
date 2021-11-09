@@ -20,6 +20,7 @@ set(SOURCES
 	src/Objects/Object.cpp
 	src/Transforms/Transform.cpp
 	src/AssetManager.cpp
+	src/Textures/Texture.cpp
 )
 
 # Define the include DIRs
@@ -38,6 +39,7 @@ pkg_search_module(GLFW REQUIRED glfw3)
 find_package(glm REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(GLEW REQUIRED)
-include_directories( ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
+find_package(OpenCV REQUIRED)
+include_directories( ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${GLM_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} )
 
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLFW_LIBRARIES} ${GLM_LIBRARIES} ${GLEW_LIBRARIES} )
+target_link_libraries( ${PROJECT_NAME} ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLFW_LIBRARIES} ${GLM_LIBRARIES} ${GLEW_LIBRARIES} ${OpenCV_LIBS} )

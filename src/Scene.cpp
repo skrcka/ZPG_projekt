@@ -15,12 +15,13 @@ Scene::Scene(Engine *e) : engine(e)
 	camera->addListener(assets->getShader("lambert"));
 	camera->addListener(assets->getShader("phong"));
 
-	objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("phong"), assets->getTransform("transform1")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("const"), assets->getTransform("transform2")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("suzi"), assets->getShader("lambert"), assets->getTransform("transform3")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("suzi_smooth"), assets->getShader("phong"), assets->getTransform("transform4")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("plain"), assets->getShader("lambert"), assets->getTransform("transform5")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), assets->getTransform("transform5")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("phong"), assets->getTransform("transform1")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("const"), assets->getTransform("transform2")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("suzi"), assets->getShader("lambert"), assets->getTransform("transform3")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("suzi_smooth"), assets->getShader("phong"), assets->getTransform("transform4")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("plain"), assets->getShader("lambert"), assets->getTransform("transform5")));
+	// objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), assets->getTransform("transform5")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("transform5"), assets->getTexture("xd")));
 }
 
 void Scene::update(float time)
@@ -29,7 +30,7 @@ void Scene::update(float time)
 	for (auto &o : objects)
 	{
 		camera->notify();
-		o->getTransform()->rotate(o->getTransform()->getRotationX() + 0.01, 0, 0);
+		//o->getTransform()->rotate(o->getTransform()->getRotationX() + 0.01, 0, 0);
 		o->draw();
 	}
 }
