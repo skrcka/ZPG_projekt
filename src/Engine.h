@@ -12,8 +12,6 @@
 
 class Engine : public KeyListener, public MouseListener {
 public:
-	void init();
-
 	void startRendering();
 
 	virtual void onKey(int key, int scancode, int action, int mods) override;
@@ -22,14 +20,6 @@ public:
 	virtual void onResize(int w, int h);
 
 	Window* getWindow();
-
-	void addMouse(MouseListener* m) {
-		mouse.push_back(m);
-	}
-
-	void addKeyboard(KeyListener* key) {
-		keyboard.push_back(key);
-	}
 
 	//Scene *getScene();
 
