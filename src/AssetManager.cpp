@@ -43,7 +43,7 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"tree", std::make_unique<Model>(tree, 6, 92814, GL_TRIANGLES)});
 	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
 
-	textures.insert({"xd", std::make_unique<Texture>("../src/Textures/test.png", textures.size())});
+	textures.insert({"xd", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
 }
 
 Transform* AssetManager::getTransform(std::string name){
