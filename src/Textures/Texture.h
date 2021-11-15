@@ -1,13 +1,17 @@
 #pragma once
 
-#include <opencv2/opencv.hpp>
 #include <memory>
 #include <string>
+
+enum TextureType{
+    Texture_RGB,
+    Texture_RGBA,
+};
 
 class Texture{
 public:
     Texture();
-    explicit Texture(std::string path, int index);
+    Texture(std::string path, int index);
     int getIndex();
 
 private:
