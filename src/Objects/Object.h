@@ -17,8 +17,8 @@ public:
     Shader* getShader();
     Model* getModel();
     Texture* getTexture();
-    void draw();
-private:
+    virtual void draw();
+protected:
     Model* model;
     Shader* shader;
     Transform* transform;
