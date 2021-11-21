@@ -21,16 +21,29 @@ Scene::Scene(Engine *e) : engine(e)
 	// objects.push_back(std::make_unique<Object>(assets->getModel("suzi_smooth"), assets->getShader("phong"), assets->getTransform("transform4")));
 	// objects.push_back(std::make_unique<Object>(assets->getModel("plain"), assets->getShader("lambert"), assets->getTransform("transform5")));
 	// objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), assets->getTransform("transform5")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("transform5"), assets->getTexture("xd")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("transform5"), assets->getTexture("negz")));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxnegx"), assets->getTexture("negx"), Skypos::negx));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxnegy"), assets->getTexture("negy"), Skypos::negy));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxnegz"), assets->getTexture("negz"), Skypos::negz));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxposx"), assets->getTexture("posx"), Skypos::posx));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxposy"), assets->getTexture("posy"), Skypos::posy));
+	skybox.push_back(std::make_unique<Skybox>(assets->getModel("plain_uv"), assets->getShader("const_texture"), assets->getTransform("skyboxposz"), assets->getTexture("posz"), Skypos::posz));
+	for (auto &s : skybox)
+		camera->addListener(s.get());
 }
 
 void Scene::update(float time)
 {
 	camera->move();
+	
+	for(auto &s : skybox){
+		camera->notify();
+		s->draw();
+	}
+
 	for (auto &o : objects)
 	{
 		camera->notify();
-		//o->getTransform()->rotate(o->getTransform()->getRotationX() + 0.01, 0, 0);
 		o->draw();
 	}
 }

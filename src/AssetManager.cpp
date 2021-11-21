@@ -30,11 +30,31 @@ AssetManager::AssetManager(Engine *e)
 	transforms.insert({"transform3", std::make_unique<Transform>()});
 	transforms.insert({"transform4", std::make_unique<Transform>()});
 	transforms.insert({"transform5", std::make_unique<Transform>()});
+
+	transforms.insert({"skyboxnegx", std::make_unique<Transform>()});
+	transforms["skyboxnegx"]->rotate(.0, .0, glm::pi<float>() / 2);
+
+	transforms.insert({"skyboxnegy", std::make_unique<Transform>()});
+	transforms["skyboxnegy"]->rotate(.0, glm::pi<float>() / 2, .0);
+	
+	transforms.insert({"skyboxnegz", std::make_unique<Transform>()});
+	transforms["skyboxnegz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
+	
+	transforms.insert({"skyboxposx", std::make_unique<Transform>()});
+	transforms["skyboxposx"]->rotate(.0, .0, glm::pi<float>() / 2);
+
+	transforms.insert({"skyboxposy", std::make_unique<Transform>()});
+	transforms["skyboxposy"]->rotate(.0, glm::pi<float>() / 2, .0);
+	
+	transforms.insert({"skyboxposz", std::make_unique<Transform>()});
+	transforms["skyboxposz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
+
 	transforms["transform1"]->move(2.0f, 0, 0);
 	transforms["transform2"]->move(-2.0f, 0, 0);
 	transforms["transform3"]->move(0, 0, 2.0f);
 	transforms["transform4"]->move(0, 0, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
+	transforms["transform5"]->rotate(glm::pi<float>()/2, glm::pi<float>()/2, .0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
 	models.insert({"plain", std::make_unique<Model>(plain, 6, 6, GL_TRIANGLES)});
@@ -44,6 +64,12 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
 
 	textures.insert({"xd", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
+	textures.insert({"negx", std::make_unique<Texture>("../src/Textures/cubemap/negx.jpg", textures.size())});
+	textures.insert({"negy", std::make_unique<Texture>("../src/Textures/cubemap/negy.jpg", textures.size())});
+	textures.insert({"negz", std::make_unique<Texture>("../src/Textures/cubemap/negz.jpg", textures.size())});
+	textures.insert({"posx", std::make_unique<Texture>("../src/Textures/cubemap/posx.jpg", textures.size())});
+	textures.insert({"posy", std::make_unique<Texture>("../src/Textures/cubemap/posy.jpg", textures.size())});
+	textures.insert({"posz", std::make_unique<Texture>("../src/Textures/cubemap/posz.jpg", textures.size())});
 }
 
 Transform* AssetManager::getTransform(std::string name){

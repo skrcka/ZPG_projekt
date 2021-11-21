@@ -15,7 +15,9 @@ public:
     Transform();
     explicit Transform(float x, float y, float z, float rotationX, float rotationY, float rotationZ);
     void rotate(float rotationX, float rotationY, float rotationZ);
+    void rotateBy(float rotationX, float rotationY, float rotationZ);
     void move(float x, float y, float z);
+    void moveBy(float x, float y, float z);
     glm::mat4 getMatrix();
     float getRotationX();
     float getRotationY();

@@ -11,7 +11,7 @@
 #include "Input/MouseListener.h"
 #include "Window.h"
 #include "AssetManager.h"
-#include "Objects/Object.h"
+#include "Objects/Skybox.h"
 
 class Engine;
 
@@ -26,4 +26,5 @@ private:
 	std::unique_ptr<AssetManager> assets;
 	std::vector<std::unique_ptr<Object>> objects;
 	std::unique_ptr<Camera> camera;
+	std::vector<std::unique_ptr<Skybox>> skybox;
 };
