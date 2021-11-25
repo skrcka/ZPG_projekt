@@ -12,18 +12,26 @@ AssetManager::AssetManager(Engine *e)
 {
 	const char *const_vertex_shader_path = "../src/Shaders/Vertex_shader_Const.glsl";
 	const char *const_fragment_shader_path = "../src/Shaders/Fragment_shader_Const.glsl";
+
 	const char *texture_fragment_shader_path = "../src/Shaders/Fragment_shader_Texture.glsl";
+
+	const char *light_vertex_shader_path = "../src/Shaders/Vertex_shader_Light.glsl";
+	const char *light_fragment_shader_path = "../src/Shaders/Fragment_shader_Light.glsl";
+
 	const char *lambert_vertex_shader_path = "../src/Shaders/Vertex_shader_Lambert.glsl";
 	const char *lambert_fragment_shader_path = "../src/Shaders/Fragment_shader_Lambert.glsl";
+
 	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.glsl";
 	const char *phong_fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.glsl";
+
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
 	shaders.insert({"const_texture", std::make_unique<Shader>(const_vertex_shader_path, texture_fragment_shader_path)});
+	shaders.insert({"light", std::make_unique<Shader>(light_vertex_shader_path, light_fragment_shader_path)});
 
-	light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
-	shaders["phong"]->applyLight(*light.get());
+	//light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
+	//shaders["phong"]->applyLight(*light.get());
 
 	transforms.insert({"transform1", std::make_unique<Transform>()});
 	transforms.insert({"transform2", std::make_unique<Transform>()});
@@ -63,7 +71,7 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"tree", std::make_unique<Model>(tree, 6, 92814, GL_TRIANGLES)});
 	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
 
-	textures.insert({"xd", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
+	textures.insert({"wood", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
 	textures.insert({"negx", std::make_unique<Texture>("../src/Textures/cubemap/negx.jpg", textures.size())});
 	textures.insert({"negy", std::make_unique<Texture>("../src/Textures/cubemap/negy.jpg", textures.size())});
 	textures.insert({"negz", std::make_unique<Texture>("../src/Textures/cubemap/negz.jpg", textures.size())});

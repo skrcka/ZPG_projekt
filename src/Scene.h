@@ -12,6 +12,8 @@
 #include "Window.h"
 #include "AssetManager.h"
 #include "Objects/Skybox.h"
+#include "Lights/PointLight.h"
+#include "Lights/DirectionalLight.h"
 
 class Engine;
 
@@ -27,4 +29,6 @@ private:
 	std::vector<std::unique_ptr<Object>> objects;
 	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<Skybox>> skybox;
+	std::vector<std::unique_ptr<PointLight>> lights;
+	std::unique_ptr<DirectionalLight> flashlight;
 };

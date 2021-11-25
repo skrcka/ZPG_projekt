@@ -5,7 +5,7 @@ Object::Object()
 }
 
 Object::Object(Model *model, Shader *shader, Transform *transform)
- : model(model), shader(shader), transform(transform), texture(nullptr)
+	: model(model), shader(shader), transform(transform), texture(nullptr)
 {
 }
 
@@ -31,7 +31,6 @@ void Object::applyModel(Model *model)
 
 void Object::draw()
 {
-	this->shader->useShader();
 	this->shader->applyTransform(transform->getMatrix());
 	if (texture)
 		this->shader->applyTexture(texture->getIndex());

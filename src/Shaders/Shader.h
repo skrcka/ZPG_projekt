@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include "Utils/Observer.h"
 #include "Textures/Texture.h"
+#include "Lights/PointLight.h"
+#include "Lights/DirectionalLight.h"
 
 class Shader : public Observer<Camera> {
 public:
@@ -14,9 +16,11 @@ public:
     ~Shader();
     void useShader();
     void applyTransform(glm::mat4 M);
-    void applyLight(glm::vec3 lightPos);
     void updated(Camera *cam);
     void applyTexture(int index);
+    void applyLight(Light* light);
+    void applyLight(DirectionalLight* light);
+    void applyLight(PointLight* light);
     glm::vec3 getLightPos();
 
     GLuint getShaderProgram();

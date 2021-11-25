@@ -7,8 +7,6 @@ Skybox::Skybox(Model *model, Shader *shader, Transform *transform, Texture *text
 
 void Skybox::draw()
 {
-	this->shader->useShader();
-
 	this->shader->applyTransform(transform->getMatrix());
 	if (texture)
 		this->shader->applyTexture(texture->getIndex());

@@ -7,7 +7,8 @@
 #include <iostream>
 #include <sstream>
 
-Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path) {
+Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
+{
 	std::ifstream vertexShaderFile(vertex_shader_path);
 	if (!vertexShaderFile.is_open())
 	{
@@ -35,10 +36,10 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 	const char *fragment_shader = fileData2String.c_str();
 
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, (const GLchar **) &vertex_shader, &vlen);
+	glShaderSource(vertexShader, 1, (const GLchar **)&vertex_shader, &vlen);
 	glCompileShader(vertexShader);
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, (const GLchar **) &fragment_shader, &flen);
+	glShaderSource(fragmentShader, 1, (const GLchar **)&fragment_shader, &flen);
 	glCompileShader(fragmentShader);
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, fragmentShader);
@@ -59,17 +60,55 @@ Shader::Shader(const char *vertex_shader_path, const char *fragment_shader_path)
 	}
 }
 
-void Shader::applyTransform(glm::mat4 M){
+void Shader::applyTransform(glm::mat4 M)
+{
 	GLint idModelTransform = glGetUniformLocation(shaderProgram, "modelMatrix");
 	glUniformMatrix4fv(idModelTransform, 1, GL_FALSE, &M[0][0]);
 }
-
+/*
 void Shader::applyLight(glm::vec3 lightPos){
 	this->lightPos = lightPos;
 	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 }
+*/
+void Shader::applyLight(Light* light) {
+	// Ambient
+	glUniform3fv(glGetUniformLocation(shaderProgram, "ambient"), 1, glm::value_ptr(light->getAmbient()));
+	// Diffuse
+	glUniform3fv(glGetUniformLocation(shaderProgram, "diffuse"), 1, glm::value_ptr(light->getDiffuse()));
+	// Specular
+	glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, glm::value_ptr(light->getSpecular()));
+}
+void Shader::applyLight(DirectionalLight* light) {
+	// Ambient
+	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.ambient"), 1, glm::value_ptr(light->getAmbient()));
+	// Diffuse
+	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.diffuse"), 1, glm::value_ptr(light->getDiffuse()));
+	// Specular
+	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.specular"), 1, glm::value_ptr(light->getSpecular()));
+	// Direction
+	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.direction"), 1, glm::value_ptr(light->getDirection()));
+}
+void Shader::applyLight(PointLight* light) {
+	std::string locator = std::string("pointLights[")+ std::to_string(light->getNumber()) + std::string("]");
+	// Ambient
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".ambient")).c_str() ), 1, glm::value_ptr(light->getAmbient()));
+	// Diffuse
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".diffuse")).c_str() ), 1, glm::value_ptr(light->getDiffuse()));
+	// Specular
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".specular")).c_str() ), 1, glm::value_ptr(light->getSpecular()));
+	// Position
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".position")).c_str() ), 1, glm::value_ptr(light->getPosition()));
+	// Constant
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".constant")).c_str() ), light->getConstant());
+	// Linear
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".linear")).c_str() ), light->getLinear());
+	// Quadratic
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".quadratic")).c_str() ), light->getQuadratic());
+}
 
-void Shader::updated(Camera *cam){
+void Shader::updated(Camera *cam)
+{
 	GLint idViewMat = glGetUniformLocation(shaderProgram, "viewMatrix");
 	GLint idProjMat = glGetUniformLocation(shaderProgram, "projectionMatrix");
 	GLint idCamPosition = glGetUniformLocation(shaderProgram, "cameraPos");
@@ -79,23 +118,28 @@ void Shader::updated(Camera *cam){
 	glUniform3fv(idCamPosition, 1, glm::value_ptr(cam->getPosition()));
 }
 
-void Shader::applyTexture(int index){
+void Shader::applyTexture(int index)
+{
 	glUniform1i(glGetUniformLocation(shaderProgram, "textureUnitID"), index);
 }
 
-glm::vec3 Shader::getLightPos(){
+glm::vec3 Shader::getLightPos()
+{
 	return lightPos;
 }
 
-void Shader::useShader(){
-    glUseProgram(shaderProgram);
+void Shader::useShader()
+{
+	glUseProgram(shaderProgram);
 }
 
-GLuint Shader::getShaderProgram(){
-    return shaderProgram;
+GLuint Shader::getShaderProgram()
+{
+	return shaderProgram;
 }
 
-Shader::~Shader(){
+Shader::~Shader()
+{
 	glDetachShader(shaderProgram, vertexShader);
 	glDetachShader(shaderProgram, fragmentShader);
 	glDeleteShader(vertexShader);

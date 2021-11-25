@@ -22,6 +22,9 @@ set(SOURCES
 	src/AssetManager.cpp
 	src/Textures/Texture.cpp
 	src/Objects/Skybox.cpp
+	src/Lights/Light.cpp
+	src/Lights/PointLight.cpp
+	src/Lights/DirectionalLight.cpp
 )
 
 # Define the include DIRs
