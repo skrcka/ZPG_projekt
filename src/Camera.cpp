@@ -78,8 +78,8 @@ void Camera::rotate(double xoffset, double yoffset, GLboolean constrainPitch)
 {
 	if (shouldRotate)
 	{
-		yaw += xoffset * sensitivity;
-		pitch -= yoffset * sensitivity;
+		yaw -= xoffset * sensitivity;
+		pitch += yoffset * sensitivity;
 
 		// make sure that when pitch is out of bounds, screen doesn't get flipped
 		if (constrainPitch)
