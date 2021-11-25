@@ -1,7 +1,7 @@
 #version 330
 layout(location=0) in vec3 in_Position;
 layout(location=1) in vec3 in_Normal;
-layout(location=3) in vec2 in_Tex;
+layout(location=2) in vec2 in_Tex;
 
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;

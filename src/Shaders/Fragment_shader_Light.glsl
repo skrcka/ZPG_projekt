@@ -35,7 +35,7 @@ uniform int pointLightsCount;
 
 out vec4 out_Color;
 
-vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
+vec3 CalcDirLight(vec3 base, DirLight light, vec3 normal, vec3 viewDir)
 {
     vec3 toLightVector = normalize(-light.direction);
     // diffuse shading
@@ -47,10 +47,10 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
     vec3 ambient  = light.ambient;
     vec3 diffuse  = light.diffuse  * dot_product;
     vec3 specular = light.specular * spec;
-    return (vec3(texture(textureUnitID, ex_uv)) * ((ambient) + (diffuse)) + (specular));
+    return (base * ((ambient) + (diffuse)) + (specular));
 }  
 
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
+vec3 CalcPointLight(vec3 base, PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
     vec3 toLightVector = normalize(light.position - fragPos);
     // diffuse shading
@@ -66,23 +66,23 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     vec3 ambient  = light.ambient;
     vec3 diffuse  = light.diffuse  * dot_product;
     vec3 specular = light.specular * spec;
-    return (ambient + diffuse + specular) * attenuation;
+    return ((base * (ambient + diffuse) + specular) * attenuation);
 } 
 void main()
 {
-  // define an output color value
-  vec3 base = vec3(0.0);
-  vec3 viewDirection = normalize(cameraPos - ex_worldPosition.xyz);
+    // define an output color value
+    vec3 base = vec3(texture(textureUnitID, ex_uv));
+    vec3 viewDirection = normalize(cameraPos - ex_worldPosition.xyz);
 
-   // add the directional light's contribution to the base
-  base += CalcDirLight(dirLight, ex_worldNormal, viewDirection);
+    // add the directional light's contribution to the base
+    base = CalcDirLight(base, dirLight, ex_worldNormal, viewDirection);
 
-  // do the same for all point lights
-  for(int i = 0; i < pointLightsCount; i++)
-  	base += CalcPointLight(pointLights[i], ex_worldNormal, ex_worldPosition.xyz, viewDirection);
-
+    // do the same for all point lights
+    for(int i = 0; i < pointLightsCount; i++){
+    	base = CalcPointLight(base, pointLights[i], ex_worldNormal, ex_worldPosition.xyz, viewDirection);
+    }
   // and add others lights as well (like spotlights)
   //base += someFunctionToCalculateSpotLight();
 
-  out_Color = vec4(base, 1.0);
+  out_Color = vec4(base,1.0f);
 } 

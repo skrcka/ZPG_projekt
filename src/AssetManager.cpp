@@ -62,7 +62,6 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform3"]->move(0, 0, 2.0f);
 	transforms["transform4"]->move(0, 0, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
-	transforms["transform5"]->rotate(glm::pi<float>()/2, glm::pi<float>()/2, .0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
 	models.insert({"plain", std::make_unique<Model>(plain, 6, 6, GL_TRIANGLES)});

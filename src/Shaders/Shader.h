@@ -21,6 +21,7 @@ public:
     void applyLight(Light* light);
     void applyLight(DirectionalLight* light);
     void applyLight(PointLight* light);
+    void applyLightCount(int count);
     glm::vec3 getLightPos();
 
     GLuint getShaderProgram();

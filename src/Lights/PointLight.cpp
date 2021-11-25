@@ -16,7 +16,8 @@ PointLight::PointLight(int number) : Light(), number(number)
     quadratic = 0.032f;
 }
 
-PointLight::PointLight(int number, glm::vec3 position) : Light(), number(number), position(position)
+PointLight::PointLight(int number, glm::vec3 position)
+    : Light(), number(number), position(position)
 {
     this->constant = 1.0f;
     this->linear = 0.09f;
@@ -31,13 +32,15 @@ PointLight::PointLight(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular,
     this->quadratic = 0.032f;
 }
 
-PointLight::~PointLight(){}
+PointLight::~PointLight() {}
 
-glm::vec3 PointLight::getPosition(){
+glm::vec3 PointLight::getPosition()
+{
     return position;
 }
 
-int PointLight::getNumber(){
+int PointLight::getNumber()
+{
     return number;
 }
 

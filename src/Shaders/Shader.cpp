@@ -107,6 +107,10 @@ void Shader::applyLight(PointLight* light) {
 	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".quadratic")).c_str() ), light->getQuadratic());
 }
 
+void Shader::applyLightCount(int count){
+	glUniform1i(glGetUniformLocation(shaderProgram, "pointLightsCount"), count);
+}
+
 void Shader::updated(Camera *cam)
 {
 	GLint idViewMat = glGetUniformLocation(shaderProgram, "viewMatrix");
