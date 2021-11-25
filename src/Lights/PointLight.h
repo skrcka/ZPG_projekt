@@ -16,7 +16,7 @@ public:
     float getQuadratic();
     int getNumber();
 
-private:
+protected:
     int number;
     glm::vec3 position;
     float constant;

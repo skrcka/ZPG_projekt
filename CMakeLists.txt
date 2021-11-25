@@ -25,6 +25,8 @@ set(SOURCES
 	src/Lights/Light.cpp
 	src/Lights/PointLight.cpp
 	src/Lights/DirectionalLight.cpp
+	src/Lights/SpotLight.cpp
+	src/Lights/Flashlight.cpp
 )
 
 # Define the include DIRs

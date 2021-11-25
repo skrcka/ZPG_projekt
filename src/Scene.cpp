@@ -16,8 +16,11 @@ Scene::Scene(Engine *e) : engine(e)
 	camera->addListener(assets->getShader("phong"));
 	camera->addListener(assets->getShader("light"));
 
-	flashlight = std::make_unique<DirectionalLight>();
+	dirLight = std::make_unique<DirectionalLight>();
 	lights.push_back(std::make_unique<PointLight>(lights.size(), glm::vec3(.0, -2.0f, .0)));
+
+	flashlight = std::make_unique<Flashlight>();
+	camera->addListener(flashlight.get());
 
 	// objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("phong"), assets->getTransform("transform1")));
 	// objects.push_back(std::make_unique<Object>(assets->getModel("sphere"), assets->getShader("const"), assets->getTransform("transform2")));
@@ -55,6 +58,7 @@ void Scene::update(float time)
 		for (auto &l : lights)
 			assets->getShader("light")->applyLight(l.get());
 		assets->getShader("light")->applyLightCount(lights.size());
+		assets->getShader("light")->applyLight(dirLight.get());
 		assets->getShader("light")->applyLight(flashlight.get());
 		o->draw();
 	}
@@ -64,4 +68,9 @@ void Scene::update(float time)
 Camera *Scene::getCamera()
 {
 	return camera.get();
+}
+
+Flashlight *Scene::getFlashlight()
+{
+	return flashlight.get();
 }

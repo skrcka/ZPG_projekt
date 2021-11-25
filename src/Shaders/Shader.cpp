@@ -71,7 +71,8 @@ void Shader::applyLight(glm::vec3 lightPos){
 	glUniform3fv(glGetUniformLocation(shaderProgram, "lightPos"), 1, glm::value_ptr(lightPos));
 }
 */
-void Shader::applyLight(Light* light) {
+void Shader::applyLight(Light *light)
+{
 	// Ambient
 	glUniform3fv(glGetUniformLocation(shaderProgram, "ambient"), 1, glm::value_ptr(light->getAmbient()));
 	// Diffuse
@@ -79,7 +80,9 @@ void Shader::applyLight(Light* light) {
 	// Specular
 	glUniform3fv(glGetUniformLocation(shaderProgram, "specular"), 1, glm::value_ptr(light->getSpecular()));
 }
-void Shader::applyLight(DirectionalLight* light) {
+
+void Shader::applyLight(DirectionalLight *light)
+{
 	// Ambient
 	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.ambient"), 1, glm::value_ptr(light->getAmbient()));
 	// Diffuse
@@ -89,25 +92,80 @@ void Shader::applyLight(DirectionalLight* light) {
 	// Direction
 	glUniform3fv(glGetUniformLocation(shaderProgram, "dirLight.direction"), 1, glm::value_ptr(light->getDirection()));
 }
-void Shader::applyLight(PointLight* light) {
-	std::string locator = std::string("pointLights[")+ std::to_string(light->getNumber()) + std::string("]");
+
+void Shader::applyLight(PointLight *light)
+{
+	std::string locator = std::string("pointLights[") + std::to_string(light->getNumber()) + std::string("]");
 	// Ambient
-	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".ambient")).c_str() ), 1, glm::value_ptr(light->getAmbient()));
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".ambient")).c_str()), 1, glm::value_ptr(light->getAmbient()));
 	// Diffuse
-	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".diffuse")).c_str() ), 1, glm::value_ptr(light->getDiffuse()));
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".diffuse")).c_str()), 1, glm::value_ptr(light->getDiffuse()));
 	// Specular
-	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".specular")).c_str() ), 1, glm::value_ptr(light->getSpecular()));
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".specular")).c_str()), 1, glm::value_ptr(light->getSpecular()));
 	// Position
-	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".position")).c_str() ), 1, glm::value_ptr(light->getPosition()));
+	glUniform3fv(glGetUniformLocation(shaderProgram, (locator + std::string(".position")).c_str()), 1, glm::value_ptr(light->getPosition()));
 	// Constant
-	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".constant")).c_str() ), light->getConstant());
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".constant")).c_str()), light->getConstant());
 	// Linear
-	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".linear")).c_str() ), light->getLinear());
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".linear")).c_str()), light->getLinear());
 	// Quadratic
-	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".quadratic")).c_str() ), light->getQuadratic());
+	glUniform1f(glGetUniformLocation(shaderProgram, (locator + std::string(".quadratic")).c_str()), light->getQuadratic());
 }
 
-void Shader::applyLightCount(int count){
+void Shader::applyLight(SpotLight *light)
+{
+	// spotLightOn
+	glUniform1i(glGetUniformLocation(shaderProgram, "spotLightOn"), 1);
+	// Ambient
+	glUniform3fv(glGetUniformLocation(shaderProgram, "spotlight.ambient"), 1, glm::value_ptr(light->getAmbient()));
+	// Diffuse
+	glUniform3fv(glGetUniformLocation(shaderProgram, "spotlight.diffuse"), 1, glm::value_ptr(light->getDiffuse()));
+	// Specular
+	glUniform3fv(glGetUniformLocation(shaderProgram, "spotlight.specular"), 1, glm::value_ptr(light->getSpecular()));
+	// Position
+	glUniform3fv(glGetUniformLocation(shaderProgram, "spotlight.position"), 1, glm::value_ptr(light->getPosition()));
+	// Position
+	glUniform3fv(glGetUniformLocation(shaderProgram, "spotlight.direction"), 1, glm::value_ptr(light->getDirection()));
+	// Constant
+	glUniform1f(glGetUniformLocation(shaderProgram, "spotlight.constant"), light->getConstant());
+	// Linear
+	glUniform1f(glGetUniformLocation(shaderProgram, "spotlight.linear"), light->getLinear());
+	// Quadratic
+	glUniform1f(glGetUniformLocation(shaderProgram, "spotlight.quadratic"), light->getQuadratic());
+	// Cut off
+	glUniform1f(glGetUniformLocation(shaderProgram, "spotlight.cutOff"), light->getCutOff());
+	// Outer cut off
+	glUniform1f(glGetUniformLocation(shaderProgram, "spotlight.outerCutOff"), light->getOuterCutOff());
+}
+
+void Shader::applyLight(Flashlight *light)
+{
+	// spotLightOn
+	glUniform1i(glGetUniformLocation(shaderProgram, "spotLightOn"), 1 ? light->isOn() : 0);
+	// Ambient
+	glUniform3fv(glGetUniformLocation(shaderProgram, "flashlight.ambient"), 1, glm::value_ptr(light->getAmbient()));
+	// Diffuse
+	glUniform3fv(glGetUniformLocation(shaderProgram, "flashlight.diffuse"), 1, glm::value_ptr(light->getDiffuse()));
+	// Specular
+	glUniform3fv(glGetUniformLocation(shaderProgram, "flashlight.specular"), 1, glm::value_ptr(light->getSpecular()));
+	// Position
+	glUniform3fv(glGetUniformLocation(shaderProgram, "flashlight.position"), 1, glm::value_ptr(light->getPosition()));
+	// Position
+	glUniform3fv(glGetUniformLocation(shaderProgram, "flashlight.direction"), 1, glm::value_ptr(light->getDirection()));
+	// Constant
+	glUniform1f(glGetUniformLocation(shaderProgram, "flashlight.constant"), light->getConstant());
+	// Linear
+	glUniform1f(glGetUniformLocation(shaderProgram, "flashlight.linear"), light->getLinear());
+	// Quadratic
+	glUniform1f(glGetUniformLocation(shaderProgram, "flashlight.quadratic"), light->getQuadratic());
+	// Cut off
+	glUniform1f(glGetUniformLocation(shaderProgram, "flashlight.cutOff"), light->getCutOff());
+	// Outer cut off
+	glUniform1f(glGetUniformLocation(shaderProgram, "flashlight.outerCutOff"), light->getOuterCutOff());
+}
+
+void Shader::applyLightCount(int count)
+{
 	glUniform1i(glGetUniformLocation(shaderProgram, "pointLightsCount"), count);
 }
 

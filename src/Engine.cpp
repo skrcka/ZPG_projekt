@@ -55,6 +55,10 @@ void Engine::onKey(int key, int scancode, int action, int mods)
 		{
 			scene->getCamera()->shouldRotate = true;
 		}
+		else if (key == GLFW_KEY_F)
+		{
+			scene->getFlashlight()->toggle();
+		}
 	}
 	else if (action == GLFW_RELEASE)
 	{

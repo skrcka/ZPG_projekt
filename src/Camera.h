@@ -27,6 +27,7 @@ public:
 	void rotate(double xoffset, double yoffset, GLboolean constrainPitch = true);
 	void updated(Window* window);
 	glm::vec3 getPosition();
+	glm::vec3 getOrientation();
 	bool goUp, goDown, goLeft, goRight, goForward, goBack, shouldRotate;
 	double lastX, lastY;
 private:

@@ -6,6 +6,7 @@ PointLight::PointLight() : Light()
     constant = 1.0f;
     linear = 0.09f;
     quadratic = 0.032f;
+    position = glm::vec3(.0, .0, .0);
 }
 
 PointLight::PointLight(int number) : Light(), number(number)
@@ -14,6 +15,7 @@ PointLight::PointLight(int number) : Light(), number(number)
     constant = 1.0f;
     linear = 0.09f;
     quadratic = 0.032f;
+    position = glm::vec3(.0, .0, .0);
 }
 
 PointLight::PointLight(int number, glm::vec3 position)

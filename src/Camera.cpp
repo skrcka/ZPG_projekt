@@ -52,6 +52,11 @@ glm::vec3 Camera::getPosition()
 	return position;
 }
 
+glm::vec3 Camera::getOrientation()
+{
+	return orientation;
+}
+
 glm::mat4 Camera::getProj()
 {
 	return projMat;

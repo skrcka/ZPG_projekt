@@ -7,7 +7,7 @@
 #include "Camera.h"
 #include "Utils/Observer.h"
 #include "Textures/Texture.h"
-#include "Lights/PointLight.h"
+#include "Lights/Flashlight.h"
 #include "Lights/DirectionalLight.h"
 
 class Shader : public Observer<Camera> {
@@ -21,6 +21,8 @@ public:
     void applyLight(Light* light);
     void applyLight(DirectionalLight* light);
     void applyLight(PointLight* light);
+    void applyLight(SpotLight* light);
+    void applyLight(Flashlight* light);
     void applyLightCount(int count);
     glm::vec3 getLightPos();
 
