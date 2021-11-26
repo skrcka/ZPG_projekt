@@ -137,6 +137,9 @@ void Engine::onClick(int button, int action, double x, double y)
 
 			glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
 			glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+			if (depth >= 1.0)
+				return;
+
 			glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 
 			glm::vec3 screenX = glm::vec3(x, newy, depth);
