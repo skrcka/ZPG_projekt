@@ -89,6 +89,14 @@ Transform* AssetManager::getTransform(std::string name){
 	return transforms[name].get();
 }
 
+Transform* AssetManager::getNewTransform(float x, float y, float z){
+	std::unique_ptr<Transform> t = std::make_unique<Transform>();
+	t->move(x, y, z);
+	Transform* pt = t.get();
+	gentransforms.push_back(std::move(t));
+	return pt;
+}
+
 Model* AssetManager::getModel(std::string name){
 	return models[name].get();
 }

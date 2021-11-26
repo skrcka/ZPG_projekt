@@ -25,6 +25,7 @@ public:
 	void update(float time);
 	Camera *getCamera();
 	Flashlight *getFlashlight();
+	void addObjectOnPos(float x, float y, float z);
 
 private:
 	Engine *engine;

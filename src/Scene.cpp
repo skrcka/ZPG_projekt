@@ -75,3 +75,8 @@ Flashlight *Scene::getFlashlight()
 {
 	return flashlight.get();
 }
+
+void Scene::addObjectOnPos(float x, float y, float z){
+	Transform* t = assets->getNewTransform(x, y, z);
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), t, assets->getTexture("wood")));
+}
