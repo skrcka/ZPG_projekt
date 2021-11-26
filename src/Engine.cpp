@@ -130,9 +130,6 @@ void Engine::onClick(int button, int action, double x, double y)
 			GLfloat depth;
 			GLuint index;
 
-			GLint lx = (GLint)x;
-			GLint ly = (GLint)y;
-
 			int newy = window->getHeight() - y;
 
 			glReadPixels(x, newy, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
