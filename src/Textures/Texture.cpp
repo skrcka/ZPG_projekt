@@ -42,8 +42,6 @@ Texture::Texture(std::string path, int index) : index(index)
 
     ilCopyPixels(0, 0, 0, width, height, 1, loadType, IL_UNSIGNED_BYTE, pixmap);
 
-    
-
     glGenTextures(1, &texture_id);
 
     glActiveTexture(GL_TEXTURE0 + index);

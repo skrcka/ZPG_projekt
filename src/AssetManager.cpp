@@ -24,6 +24,9 @@ AssetManager::AssetManager(Engine *e)
 	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.glsl";
 	const char *phong_fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.glsl";
 
+	const char* plain_obj_path = "../src/Models/plane.obj";
+	const char* house_path = "../src/Models/house.obj";
+
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
@@ -60,7 +63,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform1"]->move(2.0f, 0, 0);
 	transforms["transform2"]->move(-2.0f, 0, 0);
 	transforms["transform3"]->move(0, 0, 2.0f);
-	transforms["transform4"]->move(0, 0, -2.0f);
+	transforms["transform4"]->move(0, -1.0f, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
@@ -69,8 +72,11 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"suzi_smooth", std::make_unique<Model>(suziSmooth, 6, 2904, GL_TRIANGLES)});
 	models.insert({"tree", std::make_unique<Model>(tree, 6, 92814, GL_TRIANGLES)});
 	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
+	models.insert({"plain_obj", std::make_unique<Model>(plain_obj_path)});
+	models.insert({"house", std::make_unique<Model>(house_path)});
 
 	textures.insert({"wood", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
+	textures.insert({"house", std::make_unique<Texture>("../src/Textures/house.png", textures.size())});
 	textures.insert({"negx", std::make_unique<Texture>("../src/Textures/cubemap/negx.jpg", textures.size())});
 	textures.insert({"negy", std::make_unique<Texture>("../src/Textures/cubemap/negy.jpg", textures.size())});
 	textures.insert({"negz", std::make_unique<Texture>("../src/Textures/cubemap/negz.jpg", textures.size())});
