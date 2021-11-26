@@ -8,5 +8,7 @@ Use CMake
 
 ## Controls
 WASD - movement
+
 Hold Right Click - move camera
+
 Left Click - place
