@@ -39,6 +39,7 @@ Scene::Scene(Engine *e) : engine(e)
 
 	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform5"), assets->getTexture("wood")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("house")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("zombie"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("zombie")));
 }
 
 void Scene::update(float time)

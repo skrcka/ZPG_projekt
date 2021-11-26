@@ -26,6 +26,7 @@ AssetManager::AssetManager(Engine *e)
 
 	const char* plain_obj_path = "../src/Models/plane.obj";
 	const char* house_path = "../src/Models/house.obj";
+	const char* zombie_path = "../src/Models/zombie.obj";
 
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
@@ -74,9 +75,11 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"plain_uv", std::make_unique<Model>(plain_uv, 8, 6, GL_TRIANGLES)});
 	models.insert({"plain_obj", std::make_unique<Model>(plain_obj_path)});
 	models.insert({"house", std::make_unique<Model>(house_path)});
+	models.insert({"zombie", std::make_unique<Model>(zombie_path)});
 
 	textures.insert({"wood", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
 	textures.insert({"house", std::make_unique<Texture>("../src/Textures/house.png", textures.size())});
+	textures.insert({"zombie", std::make_unique<Texture>("../src/Textures/zombie.png", textures.size())});
 	textures.insert({"negx", std::make_unique<Texture>("../src/Textures/cubemap/negx.jpg", textures.size())});
 	textures.insert({"negy", std::make_unique<Texture>("../src/Textures/cubemap/negy.jpg", textures.size())});
 	textures.insert({"negz", std::make_unique<Texture>("../src/Textures/cubemap/negz.jpg", textures.size())});
