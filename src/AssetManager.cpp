@@ -27,6 +27,7 @@ AssetManager::AssetManager(Engine *e)
 	const char* plain_obj_path = "../src/Models/plane.obj";
 	const char* house_path = "../src/Models/house.obj";
 	const char* zombie_path = "../src/Models/zombie.obj";
+	const char* teren_path = "../src/Models/teren.obj";
 
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
@@ -42,6 +43,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms.insert({"transform3", std::make_unique<Transform>()});
 	transforms.insert({"transform4", std::make_unique<Transform>()});
 	transforms.insert({"transform5", std::make_unique<Transform>()});
+	transforms.insert({"transformg", std::make_unique<Transform>()});
 
 	transforms.insert({"skyboxnegx", std::make_unique<Transform>()});
 	transforms["skyboxnegx"]->rotate(.0, .0, glm::pi<float>() / 2);
@@ -66,6 +68,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform3"]->move(0, 0, 2.0f);
 	transforms["transform4"]->move(0, -1.0f, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
+	transforms["transformg"]->move(0, -1.01f, 0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
 	models.insert({"plain", std::make_unique<Model>(plain, 6, 6, GL_TRIANGLES)});
@@ -76,10 +79,12 @@ AssetManager::AssetManager(Engine *e)
 	models.insert({"plain_obj", std::make_unique<Model>(plain_obj_path)});
 	models.insert({"house", std::make_unique<Model>(house_path)});
 	models.insert({"zombie", std::make_unique<Model>(zombie_path)});
+	models.insert({"teren", std::make_unique<Model>(teren_path)});
 
 	textures.insert({"wood", std::make_unique<Texture>("../src/Textures/wood.jpg", textures.size())});
 	textures.insert({"house", std::make_unique<Texture>("../src/Textures/house.png", textures.size())});
 	textures.insert({"zombie", std::make_unique<Texture>("../src/Textures/zombie.png", textures.size())});
+	textures.insert({"grass", std::make_unique<Texture>("../src/Textures/grass.png", textures.size())});
 	textures.insert({"negx", std::make_unique<Texture>("../src/Textures/cubemap/negx.jpg", textures.size())});
 	textures.insert({"negy", std::make_unique<Texture>("../src/Textures/cubemap/negy.jpg", textures.size())});
 	textures.insert({"negz", std::make_unique<Texture>("../src/Textures/cubemap/negz.jpg", textures.size())});
