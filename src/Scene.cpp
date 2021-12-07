@@ -42,10 +42,10 @@ Scene::Scene(Engine *e) : engine(e)
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transformh"), assets->getTexture("house")));
 	
 	enemies.push_back(std::make_unique<Enemy>(assets->getModel("zombie"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("zombie")));
-	enemies[0]->addMovement(glm::mat4x3(glm::vec3(-10, 0, 40),
-                                glm::vec3(10, 3, 40),
-                                glm::vec3(10, 0, -40),
-                                glm::vec3(10, 0, 40)));
+	enemies[0]->addMovement(glm::mat4x3(glm::vec3(-5, -1, 10),
+                                glm::vec3(-1, 1, 10),
+                                glm::vec3(3, -1, 10),
+                                glm::vec3(5, -1, 10)));
 }
 
 void Scene::update(float time)
