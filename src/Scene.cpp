@@ -42,7 +42,10 @@ Scene::Scene(Engine *e) : engine(e)
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transformh"), assets->getTexture("house")));
 	
 	enemies.push_back(std::make_unique<Enemy>(assets->getModel("zombie"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("zombie")));
-	enemies[0]->getTransform()->printMat();
+	enemies[0]->addMovement(glm::mat4x3(glm::vec3(-10, 0, 40),
+                                glm::vec3(10, 3, 40),
+                                glm::vec3(10, 0, -40),
+                                glm::vec3(10, 0, 40)));
 }
 
 void Scene::update(float time)
@@ -78,7 +81,6 @@ void Scene::update(float time)
 		assets->getShader("light")->applyLight(dirLight.get());
 		assets->getShader("light")->applyLight(flashlight.get());
 		e->move();
-		e->getTransform()->printMat();
 		e->draw();
 	}
 	glUseProgram(0);
@@ -96,5 +98,5 @@ Flashlight *Scene::getFlashlight()
 
 void Scene::addObjectOnPos(float x, float y, float z){
 	Transform* t = assets->getNewTransform(x, y, z);
-	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), t, assets->getTexture("wood")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), t));
 }
