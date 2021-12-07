@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include <glm/gtx/string_cast.hpp>
 
 Transform::Transform() : x(.0f), y(.0f), z(.0f), rotationX(0), rotationY(0), rotationZ(0)
 {
@@ -38,6 +39,10 @@ void Transform::move(float x, float y, float z)
     M = glm::mat4(1.0f);
     moveBy(x, y, z);
     rotate(rotationX, rotationY, rotationZ);
+}
+
+void Transform::printMat(){
+    printf("%s\n", glm::to_string(M).c_str());
 }
 
 void Transform::moveBy(float x, float y, float z)

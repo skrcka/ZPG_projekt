@@ -42,6 +42,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms.insert({"transform2", std::make_unique<Transform>()});
 	transforms.insert({"transform3", std::make_unique<Transform>()});
 	transforms.insert({"transform4", std::make_unique<Transform>()});
+	transforms.insert({"transformh", std::make_unique<Transform>()});
 	transforms.insert({"transform5", std::make_unique<Transform>()});
 	transforms.insert({"transformg", std::make_unique<Transform>()});
 
@@ -67,6 +68,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform2"]->move(-2.0f, 0, 0);
 	transforms["transform3"]->move(0, 0, 2.0f);
 	transforms["transform4"]->move(0, -1.0f, -2.0f);
+	transforms["transformh"]->move(0, -1.0f, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
 	transforms["transformg"]->move(0, -1.01f, 0);
 

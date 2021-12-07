@@ -12,6 +12,7 @@
 #include "Window.h"
 #include "AssetManager.h"
 #include "Objects/Skybox.h"
+#include "Objects/Enemy.h"
 #include "Lights/Flashlight.h"
 #include "Lights/DirectionalLight.h"
 
@@ -31,6 +32,7 @@ private:
 	Engine *engine;
 	std::unique_ptr<AssetManager> assets;
 	std::vector<std::unique_ptr<Object>> objects;
+	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::unique_ptr<Camera> camera;
 	std::vector<std::unique_ptr<Skybox>> skybox;
 	std::vector<std::unique_ptr<PointLight>> lights;

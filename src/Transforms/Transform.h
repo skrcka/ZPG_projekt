@@ -19,6 +19,7 @@ public:
     void move(float x, float y, float z);
     void moveBy(float x, float y, float z);
     glm::mat4 getMatrix();
+    void printMat();
     float getRotationX();
     float getRotationY();
     float getRotationZ();
