@@ -40,12 +40,12 @@ Scene::Scene(Engine *e) : engine(e)
 	objects.push_back(std::make_unique<Object>(assets->getModel("teren"), assets->getShader("light"), assets->getTransform("transformg"), assets->getTexture("grass")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform5"), assets->getTexture("wood")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transformh"), assets->getTexture("house")));
-	
+
 	enemies.push_back(std::make_unique<Enemy>(assets->getModel("zombie"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("zombie")));
-	enemies[0]->addMovement(glm::mat4x3(glm::vec3(-5, -1, 10),
-                                glm::vec3(-1, 1, 10),
-                                glm::vec3(3, -1, 10),
-                                glm::vec3(5, -1, 10)));
+	enemies[0]->addMovement(-5, -1, 10);
+	enemies[0]->addMovement(-1, 1, 10);
+	enemies[0]->addMovement(3, -1, 10);
+	enemies[0]->addMovement(5, -1, 10);
 }
 
 void Scene::update(float time)
@@ -96,7 +96,8 @@ Flashlight *Scene::getFlashlight()
 	return flashlight.get();
 }
 
-void Scene::addObjectOnPos(float x, float y, float z){
-	Transform* t = assets->getNewTransform(x, y, z);
+void Scene::addObjectOnPos(float x, float y, float z)
+{
+	Transform *t = assets->getNewTransform(x, y, z);
 	objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), t));
 }

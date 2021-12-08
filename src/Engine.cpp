@@ -170,6 +170,11 @@ Engine::Engine()
 	window = std::make_unique<Window>(this, 800, 600, "Gamewindow");
 
 	ilInit();
+	GL_CHECK(glEnable(GL_DEPTH_TEST));
+	GL_CHECK(glEnable(GL_STENCIL_TEST));
+	GL_CHECK(glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
+	glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should pass the stencil test
+	glStencilMask(0xFF);			   // enable writing to the stencil buffer
 	/*
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
@@ -179,8 +184,7 @@ Engine::Engine()
 		throw std::runtime_error("At least GLEW 3.3 is required");
 	}
 
-	GL_CHECK(glEnable(GL_DEPTH_TEST));
-	GL_CHECK(glEnable(GL_STENCIL_TEST));
+	
 	GL_CHECK(glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
 	*/
 }
