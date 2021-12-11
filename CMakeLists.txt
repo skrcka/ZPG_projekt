@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-# Sources
+
 set(SOURCES
     src/main.cpp
 	src/Utils/utils.cpp
@@ -28,9 +28,9 @@ set(SOURCES
 	src/Lights/DirectionalLight.cpp
 	src/Lights/SpotLight.cpp
 	src/Lights/Flashlight.cpp
+	src/Material.cpp
 )
 
-# Define the include DIRs
 include_directories(
 	"${CMAKE_SOURCE_DIR}/src"
 	"${CMAKE_SOURCE_DIR}/include"

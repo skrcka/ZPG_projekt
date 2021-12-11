@@ -18,22 +18,25 @@ AssetManager::AssetManager(Engine *e)
 	const char *light_vertex_shader_path = "../src/Shaders/Vertex_shader_Light.glsl";
 	const char *light_fragment_shader_path = "../src/Shaders/Fragment_shader_Light.glsl";
 
+	const char *material_fragment_shader_path = "../src/Shaders/Fragment_shader_Light_Material.glsl";
+
 	const char *lambert_vertex_shader_path = "../src/Shaders/Vertex_shader_Lambert.glsl";
 	const char *lambert_fragment_shader_path = "../src/Shaders/Fragment_shader_Lambert.glsl";
 
 	const char *phong_vertex_shader_path = "../src/Shaders/Vertex_shader_Phong.glsl";
 	const char *phong_fragment_shader_path = "../src/Shaders/Fragment_shader_Phong.glsl";
 
-	const char* plain_obj_path = "../src/Models/plane.obj";
-	const char* house_path = "../src/Models/house.obj";
-	const char* zombie_path = "../src/Models/zombie.obj";
-	const char* teren_path = "../src/Models/teren.obj";
+	const char *plain_obj_path = "../src/Models/plane.obj";
+	const char *house_path = "../src/Models/house.obj";
+	const char *zombie_path = "../src/Models/zombie.obj";
+	const char *teren_path = "../src/Models/teren.obj";
 
 	shaders.insert({"const", std::make_unique<Shader>(const_vertex_shader_path, const_fragment_shader_path)});
 	shaders.insert({"lambert", std::make_unique<Shader>(lambert_vertex_shader_path, lambert_fragment_shader_path)});
 	shaders.insert({"phong", std::make_unique<Shader>(phong_vertex_shader_path, phong_fragment_shader_path)});
 	shaders.insert({"const_texture", std::make_unique<Shader>(const_vertex_shader_path, texture_fragment_shader_path)});
 	shaders.insert({"light", std::make_unique<Shader>(light_vertex_shader_path, light_fragment_shader_path)});
+	shaders.insert({"material", std::make_unique<Shader>(light_vertex_shader_path, material_fragment_shader_path)});
 
 	//light = std::make_unique<glm::vec3>(0.0f, 0.0f, 0.0f);
 	//shaders["phong"]->applyLight(*light.get());
@@ -44,6 +47,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms.insert({"transform4", std::make_unique<Transform>()});
 	transforms.insert({"transformh", std::make_unique<Transform>()});
 	transforms.insert({"transform5", std::make_unique<Transform>()});
+	transforms.insert({"transform6", std::make_unique<Transform>()});
 	transforms.insert({"transformg", std::make_unique<Transform>()});
 
 	transforms.insert({"skyboxnegx", std::make_unique<Transform>()});
@@ -51,16 +55,16 @@ AssetManager::AssetManager(Engine *e)
 
 	transforms.insert({"skyboxnegy", std::make_unique<Transform>()});
 	transforms["skyboxnegy"]->rotate(.0, glm::pi<float>() / 2, .0);
-	
+
 	transforms.insert({"skyboxnegz", std::make_unique<Transform>()});
 	transforms["skyboxnegz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
-	
+
 	transforms.insert({"skyboxposx", std::make_unique<Transform>()});
 	transforms["skyboxposx"]->rotate(.0, .0, glm::pi<float>() / 2);
 
 	transforms.insert({"skyboxposy", std::make_unique<Transform>()});
 	transforms["skyboxposy"]->rotate(.0, glm::pi<float>() / 2, .0);
-	
+
 	transforms.insert({"skyboxposz", std::make_unique<Transform>()});
 	transforms["skyboxposz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
 
@@ -70,6 +74,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform4"]->move(0, -1.0f, -2.0f);
 	transforms["transformh"]->move(0, -1.0f, -2.0f);
 	transforms["transform5"]->move(0, -1.0f, 0);
+	transforms["transform6"]->move(0.2f, -1.0f, 0);
 	transforms["transformg"]->move(0, -1.01f, 0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
@@ -93,28 +98,39 @@ AssetManager::AssetManager(Engine *e)
 	textures.insert({"posx", std::make_unique<Texture>("../src/Textures/cubemap/posx.jpg", textures.size())});
 	textures.insert({"posy", std::make_unique<Texture>("../src/Textures/cubemap/posy.jpg", textures.size())});
 	textures.insert({"posz", std::make_unique<Texture>("../src/Textures/cubemap/posz.jpg", textures.size())});
+
+	materials.insert({"material1", std::make_unique<Material>()});
 }
 
-Transform* AssetManager::getTransform(std::string name){
+Transform *AssetManager::getTransform(std::string name)
+{
 	return transforms[name].get();
 }
 
-Transform* AssetManager::getNewTransform(float x, float y, float z){
+Transform *AssetManager::getNewTransform(float x, float y, float z)
+{
 	std::unique_ptr<Transform> t = std::make_unique<Transform>();
 	t->move(x, y, z);
-	Transform* pt = t.get();
+	Transform *pt = t.get();
 	gentransforms.push_back(std::move(t));
 	return pt;
 }
 
-Model* AssetManager::getModel(std::string name){
+Model *AssetManager::getModel(std::string name)
+{
 	return models[name].get();
 }
 
-Shader* AssetManager::getShader(std::string name){
+Shader *AssetManager::getShader(std::string name)
+{
 	return shaders[name].get();
 }
 
-Texture* AssetManager::getTexture(std::string name){
+Texture *AssetManager::getTexture(std::string name)
+{
 	return textures[name].get();
+}
+
+Material *AssetManager::getMaterial(std::string name){
+	return materials[name].get();
 }

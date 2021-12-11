@@ -9,6 +9,7 @@
 #include "Textures/Texture.h"
 #include "Lights/Flashlight.h"
 #include "Lights/DirectionalLight.h"
+#include "Material.h"
 
 class Shader : public Observer<Camera> {
 public:
@@ -18,6 +19,7 @@ public:
     void applyTransform(glm::mat4 M);
     void updated(Camera *cam);
     void applyTexture(int index);
+    void applyMaterial(Material* material);
     void applyLight(Light* light);
     void applyLight(DirectionalLight* light);
     void applyLight(PointLight* light);

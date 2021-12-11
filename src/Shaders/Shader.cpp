@@ -185,6 +185,15 @@ void Shader::applyTexture(int index)
 	glUniform1i(glGetUniformLocation(shaderProgram, "textureUnitID"), index);
 }
 
+void Shader::applyMaterial(Material* material)
+{
+	glUniform1f(glGetUniformLocation(shaderProgram, "ambient_coef"), material->getAmbient());
+	glUniform1f(glGetUniformLocation(shaderProgram, "diffuse_coef"), material->getDiffuse());
+	glUniform1f(glGetUniformLocation(shaderProgram, "specular_coef"), material->getSpecular());
+	glUniform1f(glGetUniformLocation(shaderProgram, "shininess"), material->getShininess());
+	glUniform1f(glGetUniformLocation(shaderProgram, "normal_intensity"), material->getIntensity());
+}
+
 glm::vec3 Shader::getLightPos()
 {
 	return lightPos;

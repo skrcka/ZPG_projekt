@@ -38,7 +38,8 @@ Scene::Scene(Engine *e) : engine(e)
 		camera->addListener(s.get());
 
 	objects.push_back(std::make_unique<Object>(assets->getModel("teren"), assets->getShader("light"), assets->getTransform("transformg"), assets->getTexture("grass")));
-	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform5"), assets->getTexture("wood")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform5"), assets->getTexture("wood"), assets->getMaterial("material1")));
+	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform6"), assets->getTexture("wood")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transformh"), assets->getTexture("house")));
 
 	enemies.push_back(std::make_unique<Enemy>(assets->getModel("zombie"), assets->getShader("light"), assets->getTransform("transform4"), assets->getTexture("zombie")));

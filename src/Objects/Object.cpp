@@ -5,12 +5,17 @@ Object::Object()
 }
 
 Object::Object(Model *model, Shader *shader, Transform *transform)
-	: model(model), shader(shader), transform(transform), texture(nullptr)
+	: model(model), shader(shader), transform(transform), texture(nullptr), material(nullptr)
 {
 }
 
 Object::Object(Model *model, Shader *shader, Transform *transform, Texture *texture)
-	: model(model), shader(shader), transform(transform), texture(texture)
+	: model(model), shader(shader), transform(transform), texture(texture), material(nullptr)
+{
+}
+
+Object::Object(Model *model, Shader *shader, Transform *transform, Texture *texture, Material* material)
+	: model(model), shader(shader), transform(transform), texture(texture), material(material)
 {
 }
 
@@ -34,6 +39,8 @@ void Object::draw()
 	this->shader->applyTransform(transform->getMatrix());
 	if (texture)
 		this->shader->applyTexture(texture->getIndex());
+	if (material)
+		this->shader->applyMaterial(material);
 	glBindVertexArray(model->getVAO());
 
 	glDrawArrays(GL_TRIANGLES, 0, model->getSize());
