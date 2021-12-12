@@ -51,6 +51,13 @@ uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int pointLightsCount;
 uniform int spotLightOn;
 
+// material
+uniform float ambient_coef;
+uniform float diffuse_coef;
+uniform float specular_coef;
+uniform int shininess;
+uniform float normal_intensity;
+
 out vec4 out_Color;
 
 vec3 CalcDirLight(vec3 base, DirLight light, vec3 normal, vec3 viewDir)
@@ -59,12 +66,12 @@ vec3 CalcDirLight(vec3 base, DirLight light, vec3 normal, vec3 viewDir)
     // diffuse shading
     float dot_product = max(dot(toLightVector, normalize(normal)), 0.0);
     // specular shading
-    vec3 reflectDir = normalize(reflect(-toLightVector, normalize(normal)));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 30);
+    vec3 reflectDir = normalize(reflect(-toLightVector, normalize(normal * vec3(1, 1, normal_intensity))));
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // combine results
-    vec3 ambient  = light.ambient;
-    vec3 diffuse  = light.diffuse  * dot_product;
-    vec3 specular = light.specular * spec;
+    vec3 ambient  = ambient_coef * light.ambient;
+    vec3 diffuse  = diffuse_coef * light.diffuse  * dot_product;
+    vec3 specular = specular_coef * light.specular * spec;
     return (base * ((ambient) + (diffuse)) + (specular));
 }  
 
@@ -72,18 +79,18 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
     vec3 toLightVector = normalize(light.position - fragPos);
     // diffuse shading
-    float dot_product = max(dot(toLightVector, normalize(normal)), 0.0);
+    float dot_product = max(dot(toLightVector, normalize(normal * vec3(1, 1, normal_intensity))), 0.0);
     // specular shading
-    vec3 reflectDir =  normalize(reflect(-toLightVector,  normalize(normal)));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 30);
+    vec3 reflectDir =  normalize(reflect(-toLightVector,  normalize(normal * vec3(1, 1, normal_intensity))));
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // attenuation
     float distance    = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + 
   			     light.quadratic * (distance * distance));    
     // combine results
-    vec3 ambient  = light.ambient;
-    vec3 diffuse  = light.diffuse  * dot_product;
-    vec3 specular = light.specular * spec;
+    vec3 ambient  = ambient_coef * light.ambient;
+    vec3 diffuse  = diffuse_coef * light.diffuse  * dot_product;
+    vec3 specular = specular_coef * light.specular * spec;
     return (((ambient + diffuse) + specular) * attenuation);
 } 
 
@@ -91,10 +98,10 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 {
     vec3 toLightVector = normalize(light.position - fragPos);
     // diffuse shading
-    float dot_product = max(dot(toLightVector, normalize(normal)), 0.0);
+    float dot_product = max(dot(toLightVector, normalize(normal * vec3(1, 1, normal_intensity))), 0.0);
     // specular shading
-    vec3 reflectDir =  normalize(reflect(-toLightVector,  normalize(normal)));
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 30);
+    vec3 reflectDir =  normalize(reflect(-toLightVector,  normalize(normal * vec3(1, 1, normal_intensity))));
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     // attenuation
     float distance    = length(light.position - fragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + 
@@ -104,9 +111,9 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     float epsilon = light.cutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
     // combine results
-    vec3 ambient  = light.ambient;
-    vec3 diffuse  = light.diffuse  * dot_product;
-    vec3 specular = light.specular * spec;
+    vec3 ambient  = ambient_coef * light.ambient;
+    vec3 diffuse  = diffuse_coef * light.diffuse  * dot_product;
+    vec3 specular = specular_coef * light.specular * spec;
     return (ambient + diffuse + specular) * attenuation * intensity;
 }
 

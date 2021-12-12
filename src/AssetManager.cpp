@@ -73,8 +73,8 @@ AssetManager::AssetManager(Engine *e)
 	transforms["transform3"]->move(0, 0, 2.0f);
 	transforms["transform4"]->move(0, -1.0f, -2.0f);
 	transforms["transformh"]->move(0, -1.0f, -2.0f);
-	transforms["transform5"]->move(0, -1.0f, 0);
-	transforms["transform6"]->move(0.2f, -1.0f, 0);
+	transforms["transform5"]->move(0, -0.7f, 0);
+	transforms["transform6"]->move(2.5f, -0.7f, 0);
 	transforms["transformg"]->move(0, -1.01f, 0);
 
 	models.insert({"sphere", std::make_unique<Model>(sphere, 6, 2880, GL_TRIANGLES)});
@@ -99,7 +99,8 @@ AssetManager::AssetManager(Engine *e)
 	textures.insert({"posy", std::make_unique<Texture>("../src/Textures/cubemap/posy.jpg", textures.size())});
 	textures.insert({"posz", std::make_unique<Texture>("../src/Textures/cubemap/posz.jpg", textures.size())});
 
-	materials.insert({"material1", std::make_unique<Material>()});
+	// ambient(0.1f), diffuse(1.0f), specular(1.0f), shininess(30), intensity(1.0f)
+	materials.insert({"material1", std::make_unique<Material>(0.1f, 1.0f, 1.0f, 60)});
 }
 
 Transform *AssetManager::getTransform(std::string name)
