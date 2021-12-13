@@ -13,7 +13,7 @@ public:
     Object(Model *model, Shader *shader, Transform *transform);
     Object(Model *model, Shader *shader, Transform *transform, Texture *texture);
     Object(Model *model, Shader *shader, Transform *transform, Texture *texture, Material *material);
-    void applyShader(Shader* shader);
+    void applyShader(Shader *shader);
     void applyModel(Model *model);
     void applyTransform(Transform *transform);
     Transform *getTransform();
@@ -21,8 +21,11 @@ public:
     Model *getModel();
     Texture *getTexture();
     virtual void draw();
+    int getId();
+    void addId(int id);
 
 protected:
+    int id;
     Model *model;
     Shader *shader;
     Transform *transform;

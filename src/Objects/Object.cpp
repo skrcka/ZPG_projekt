@@ -1,21 +1,22 @@
 #include "Object.h"
 
 Object::Object()
+	: id(0), model(nullptr), shader(nullptr), transform(nullptr), texture(nullptr), material(nullptr)
 {
 }
 
 Object::Object(Model *model, Shader *shader, Transform *transform)
-	: model(model), shader(shader), transform(transform), texture(nullptr), material(nullptr)
+	: id(0), model(model), shader(shader), transform(transform), texture(nullptr), material(nullptr)
 {
 }
 
 Object::Object(Model *model, Shader *shader, Transform *transform, Texture *texture)
-	: model(model), shader(shader), transform(transform), texture(texture), material(nullptr)
+	: id(0), model(model), shader(shader), transform(transform), texture(texture), material(nullptr)
 {
 }
 
-Object::Object(Model *model, Shader *shader, Transform *transform, Texture *texture, Material* material)
-	: model(model), shader(shader), transform(transform), texture(texture), material(material)
+Object::Object(Model *model, Shader *shader, Transform *transform, Texture *texture, Material *material)
+	: id(0), model(model), shader(shader), transform(transform), texture(texture), material(material)
 {
 }
 
@@ -44,6 +45,16 @@ void Object::draw()
 	glBindVertexArray(model->getVAO());
 
 	glDrawArrays(GL_TRIANGLES, 0, model->getSize());
+}
+
+void Object::addId(int id)
+{
+	this->id = id;
+}
+
+int Object::getId()
+{
+	return id;
 }
 
 Transform *Object::getTransform()

@@ -27,6 +27,7 @@ public:
 	Camera *getCamera();
 	Flashlight *getFlashlight();
 	void addObjectOnPos(float x, float y, float z);
+	void deleteObjectById(int id);
 
 private:
 	Engine *engine;

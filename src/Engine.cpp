@@ -145,7 +145,10 @@ void Engine::onClick(int button, int action, double x, double y)
 			glm::vec4 viewPort = glm::vec4(0, 0, window->getWidth(), window->getHeight());
 			glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
 
-			scene->addObjectOnPos(pos.x, pos.y, pos.z);
+			if (index == 1)
+				scene->addObjectOnPos(pos.x, pos.y, pos.z);
+			else if (index > 0)
+				scene->deleteObjectById(index);
 		}
 	}
 	else if (action == GLFW_RELEASE)
@@ -175,7 +178,7 @@ Engine::Engine()
 	GL_CHECK(glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
 	glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should pass the stencil test
 	glStencilMask(0xFF);			   // enable writing to the stencil buffer
-	/*
+									   /*
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
 		throw std::runtime_error("Could not initialize glew");

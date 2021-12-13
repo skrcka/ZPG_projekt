@@ -38,6 +38,7 @@ Scene::Scene(Engine *e) : engine(e)
 		camera->addListener(s.get());
 
 	objects.push_back(std::make_unique<Object>(assets->getModel("teren"), assets->getShader("light"), assets->getTransform("transformg"), assets->getTexture("grass")));
+	objects[0]->addId(1);
 	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("material"), assets->getTransform("transform5"), assets->getTexture("wood"), assets->getMaterial("material1")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("plain_obj"), assets->getShader("light"), assets->getTransform("transform6"), assets->getTexture("wood")));
 	objects.push_back(std::make_unique<Object>(assets->getModel("house"), assets->getShader("light"), assets->getTransform("transformh"), assets->getTexture("house")));
@@ -47,6 +48,16 @@ Scene::Scene(Engine *e) : engine(e)
 	enemies[0]->addMovement(-1, 1, 10);
 	enemies[0]->addMovement(3, -1, 10);
 	enemies[0]->addMovement(5, -1, 10);
+}
+
+void Scene::deleteObjectById(int id)
+{
+	for (int i = 0; i < objects.size(); i++)
+		if (objects[i]->getId() == id)
+		{
+			objects.erase(objects.begin() + i);
+			break;
+		}
 }
 
 void Scene::update(float time)
@@ -69,6 +80,7 @@ void Scene::update(float time)
 		assets->getShader("light")->applyLightCount(lights.size());
 		assets->getShader("light")->applyLight(dirLight.get());
 		assets->getShader("light")->applyLight(flashlight.get());
+		glStencilFunc(GL_ALWAYS, o->getId(), 0xFF);
 		o->draw();
 	}
 
@@ -82,6 +94,11 @@ void Scene::update(float time)
 		assets->getShader("light")->applyLight(dirLight.get());
 		assets->getShader("light")->applyLight(flashlight.get());
 		e->move();
+
+		glm::vec3 enemPos = glm::vec3(e->getTransform()->getX(), e->getTransform()->getY(), e->getTransform()->getZ());
+		glm::vec3 camPos = camera->getPosition();
+		if(glm::distance(enemPos, camPos) < 1.5)
+			exit(0);
 		e->draw();
 	}
 	glUseProgram(0);
@@ -101,4 +118,5 @@ void Scene::addObjectOnPos(float x, float y, float z)
 {
 	Transform *t = assets->getNewTransform(x, y, z);
 	objects.push_back(std::make_unique<Object>(assets->getModel("tree"), assets->getShader("phong"), t));
+	objects[objects.size()-1]->addId(objects.size());
 }
