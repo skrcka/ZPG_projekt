@@ -51,7 +51,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms.insert({"transformg", std::make_unique<Transform>()});
 
 	transforms.insert({"skyboxnegx", std::make_unique<Transform>()});
-	transforms["skyboxnegx"]->rotate(.0, .0, glm::pi<float>() / 2);
+	transforms["skyboxnegx"]->rotate(glm::pi<float>(), .0, -glm::pi<float>() / 2);
 
 	transforms.insert({"skyboxnegy", std::make_unique<Transform>()});
 	transforms["skyboxnegy"]->rotate(.0, glm::pi<float>() / 2, .0);
@@ -63,10 +63,10 @@ AssetManager::AssetManager(Engine *e)
 	transforms["skyboxposx"]->rotate(.0, .0, glm::pi<float>() / 2);
 
 	transforms.insert({"skyboxposy", std::make_unique<Transform>()});
-	transforms["skyboxposy"]->rotate(.0, glm::pi<float>() / 2, .0);
+	transforms["skyboxposy"]->rotate(glm::pi<float>(), -glm::pi<float>() / 2, .0);
 
 	transforms.insert({"skyboxposz", std::make_unique<Transform>()});
-	transforms["skyboxposz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
+	transforms["skyboxposz"]->rotate(-glm::pi<float>() / 2, -glm::pi<float>() / 2, .0);
 
 	transforms["transform1"]->move(2.0f, 0, 0);
 	transforms["transform2"]->move(-2.0f, 0, 0);
