@@ -28,7 +28,6 @@ public:
     void applyLightCount(int count);
     glm::vec3 getLightPos();
 
-    GLuint getShaderProgram();
 private:
     glm::vec3 lightPos;
     GLuint shaderProgram;

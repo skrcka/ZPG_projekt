@@ -204,11 +204,6 @@ void Shader::useShader()
 	glUseProgram(shaderProgram);
 }
 
-GLuint Shader::getShaderProgram()
-{
-	return shaderProgram;
-}
-
 Shader::~Shader()
 {
 	glDetachShader(shaderProgram, vertexShader);
