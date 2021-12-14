@@ -54,7 +54,7 @@ AssetManager::AssetManager(Engine *e)
 	transforms["skyboxnegx"]->rotate(glm::pi<float>(), .0, -glm::pi<float>() / 2);
 
 	transforms.insert({"skyboxnegy", std::make_unique<Transform>()});
-	transforms["skyboxnegy"]->rotate(.0, glm::pi<float>() / 2, .0);
+	transforms["skyboxnegy"]->rotate(.0, glm::pi<float>(), .0);
 
 	transforms.insert({"skyboxnegz", std::make_unique<Transform>()});
 	transforms["skyboxnegz"]->rotate(glm::pi<float>() / 2, glm::pi<float>() / 2, .0);
